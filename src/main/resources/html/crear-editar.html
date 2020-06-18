@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="Jorge Michelen">
+<title>Mercado</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/default.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
+			<h4 class="mr-md-auto font-weight-bold">
+				<img src="https://img.icons8.com/color/48/000000/market-square.png" />Mercado
+			</h4>
+			<nav class="pref-nav my-2 my-md-0 mr-md-3">
+				<a class="p-3 text-dark" href="/">Comprar</a> <a
+					class="p-3 text-dark" href="/administrar/info/ventas">Ventas Realizadas</a> <a
+					class="p-3 text-dark" href="/administrar/productos">Administrar Productos</a>
+			</nav>
+			<a class="btn btn-outline-success" href="#"><img
+				src="https://img.icons8.com/color/48/000000/shopping-cart-loaded.png"
+				width="25px" height="25px" />(0)</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="mx-auto text-center">
+			<h4>Editar - Crear Producto</h4>
+		</div>
+		<form id="crear-editar" action="/administrar/producto/crear-editar" th:object="${producto}" method="POST">
+			<h5 class="h5 font-weight-normal">Crear - Editar Producto</h5>
+			<input type="hidden" name="id" th:value="${producto.id}">
+			<label for="nombre">Nombre</label>
+			<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" th:value="${producto.nombre}" required autofocus>
+			<label for="precio">Precio</label>
+			<input type="number" id="precio" name="precio" class="form-control" placeholder="Precio" th:value="${producto.precio}" min="0" required>
+		</form>
+		<button class="btn btn-primary" form="crear-editar" type="submit">Aceptar</button>
+		<a class="btn btn-default" role="button" href="/administrar/productos">Cancelar</a>
+	</div>
+</body>
+</html>

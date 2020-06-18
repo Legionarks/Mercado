@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="Jorge Michelen">
+<title>Mercado</title>
+
+<!-- Bootstrap core CSS -->
+<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
+
+<!-- Custom styles for this template -->
+<link href="/default.css" rel="stylesheet">
+</head>
+<body>
+	<header>
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm">
+			<h4 class="mr-md-auto font-weight-bold">
+				<img src="https://img.icons8.com/color/48/000000/market-square.png" />Mercado
+			</h4>
+			<nav class="pref-nav my-2 my-md-0 mr-md-3">
+				<a class="p-3 text-dark" href="/">Comprar</a> <a
+					class="p-3 text-dark" href="/administrar/info/ventas">Ventas
+					Realizadas</a> <a class="p-3 text-dark" href="/administrar/productos">Administrar
+					Productos</a>
+			</nav>
+			<a class="btn btn-outline-success" href="#"><img
+				src="https://img.icons8.com/color/48/000000/shopping-cart-loaded.png"
+				width="25px" height="25px" />(0)</a>
+		</div>
+	</header>
+
+	<div class="container">
+		<div class="mx-auto text-center">
+			<h4>Carrito de Compra</h4>
+		</div>
+
+		<form id="carrito" action="/carrito/comprar" method="post">
+			<h5>Datos del Cliente</h5>
+			<br> <label for="cliente">Nombre del Cliente</label> <input
+				type="text" id="cliente" name="cliente" required>
+
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
+					<tr>
+						<th>Producto</th>
+						<th>Precio (RD$)</th>
+						<th>Cantidad</th>
+						<th>Total (RD$)</th>
+						<th>Accion</th>
+					</tr>
+				<tbody>
+					<th:block th:each="compra : ${carrito.listaProductos}">
+						<tr>
+							<td th:text="${compra.producto.nombre}"></td>
+							<td th:text="${compra.producto.precio}"></td>
+							<td th:text="${compra.cantidad}"></td>
+							<td th:text="${compra.total}"></td>
+							<td>
+								<form th:id="${compra.producto.id}"
+									action="/carrito/producto/eliminar" method="post">
+									<input type="hidden" name="id" th:value="${compra.producto.id}">
+									<button type="submit" th:form="${compra.producto.id}"
+										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+				<tfoot class="text-right table-active font-weight-bold">
+					<tr>
+						<td th:text="'Total: ' + ${total}" colspan="5"></td>
+					</tr>
+				</tfoot>
+			</table>
+
+			<div class="mx-auto text-center">
+				<button class="btn btn-primary" form="carrito" type="submit">Procesar
+					Compra</button>
+				<a class="btn btn-danger" role="button"
+					href="/carrito/limpiar">Limpiar Carro Compra</a>
+			</div>
+		</form>
+	</div>
+</body>
+</html>
