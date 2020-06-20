@@ -2,37 +2,37 @@ package edu.pucmm.market.data;
 
 public class Usuario {
 
-	private String usuario;
-	private String nombre;
-	private String password;
-	
-	public Usuario(String usuario, String nombre, String password) {
-		this.usuario = usuario;
-		this.nombre = nombre;
-		this.password = password;
-	}
+    private String usuario;
+    private String nombre;
+    private String password;
 
-	public String getUsuario() {
-		return usuario;
-	}
+    public Usuario(String usuario, String nombre, String password) {
+	this.usuario = usuario;
+	this.nombre = nombre;
+	this.password = password;
+    }
 
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
+    public String getUsuario() {
+	return usuario;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setUsuario(String usuario) {
+	this.usuario = usuario;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+	return nombre;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+	return password;
+    }
+
+    public void setPassword(String password) {
+	this.password = password;
+    }
 }

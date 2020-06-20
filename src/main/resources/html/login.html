@@ -1,34 +1,29 @@
 <!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="description" content="">
-<meta name="author"
-	content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
-<meta name="generator" content="Jekyll v4.0.1">
-<title>Signin</title>
-
-<!-- Bootstrap core CSS -->
-<link href="/bootstrap/css/bootstrap.css" rel="stylesheet">
-
-<!-- Custom styles for this template -->
-<link href="/default.css" rel="stylesheet">
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
 </head>
-<body class="text-center">
-	<form class="form-signin" action="/autenticar" method="POST">
-		<img class="mb-4"
-			src="https://img.icons8.com/pastel-glyph/64/000000/shop.png" alt=""
-			width="72" height="72">
-		<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
-		<label for="usuario" class="sr-only">Email address</label>
-		<input type="text" id="usuario" name="usuario" class="form-control" placeholder="Usuario" required autofocus>
-		<label for="password" class="sr-only">Password</label>
-		<input type="password" id="password" name="password" class="form-control" placeholder="Password" required>
+<body>
+	<div class="container">
+		<div class="mx-auto text-center">
+			<form class="form-signin" action="/autenticar" method="POST">
+				<img class="mb-4"
+					src="https://img.icons8.com/pastel-glyph/64/000000/shop.png" alt=""
+					width="72" height="72">
+				<h1 class="h3 mb-3 font-weight-normal">Ingrese sus datos</h1>
+				<label for="usuario" class="sr-only">Usuario</label> <input
+					type="text" id="usuario" name="usuario" class="mb-3 form-control"
+					placeholder="Usuario" required autofocus> <label
+					for="password" class="mb-3 sr-only">Password</label> <input
+					type="password" id="password" name="password"
+					class="mb-3 form-control" placeholder="Password" required>
 
-		<button class="btn btn-lg btn-primary btn-block" type="submit">Iniciar sesion</button>
-		<p class="mt-5 mb-3 text-muted">&copy; 2017-2020</p>
-	</form>
+				<button class="btn btn-lg btn-rounded btn-primary" type="submit">Iniciar
+					sesion</button>
+				<a class="btn btn-lg btn-rounded btn-light" role="button" href="/">Cancelar</a>
+
+				<p class="mt-5 mb-3 text-muted">Jorge Michelen [2016-0876]</p>
+			</form>
+		</div>
+	</div>
 </body>
 </html>

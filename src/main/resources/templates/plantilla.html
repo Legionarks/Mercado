@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="es">
+<head th:fragment="head">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="description" content="">
+<meta name="author" content="Jorge Michelen">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+
+<link href="/default.css" rel="stylesheet">
+
+<title>Mercado</title>
+</head>
+<body>
+	<header th:fragment="header">
+		<div
+			class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 border-bottom shadow-sm navbar-fixed-top">
+			<h4 class="mr-md-auto font-weight-bold">
+				<img src="https://img.icons8.com/color/48/000000/market-square.png" />Mercado
+			</h4>
+			<nav class="pref-nav my-2 my-md-0 mr-md-3">
+				<a class="p-3 text-dark zoom" href="/">Comprar</a> <a
+					class="p-3 text-dark zoom" href="/administrar/info/ventas">Ventas
+					Realizadas</a> <a class="p-3 text-dark zoom"
+					href="/administrar/productos">Administrar Productos</a>
+			</nav>
+			<a class="btn btn-outline-success" href="/carrito"><img
+				src="https://img.icons8.com/color/48/000000/shopping-cart-loaded.png"
+				width="25px" height="25px" /><span
+				th:text="'(' + ${carrito_cantidad} + ')'"></span></a>
+		</div>
+	</header>
+
+	<div th:fragment="titulo_ventana(titulo)">
+		<div class="mx-auto text-center">
+			<h4 th:text="${titulo}"></h4>
+		</div>
+	</div>
+</body>
+</html>

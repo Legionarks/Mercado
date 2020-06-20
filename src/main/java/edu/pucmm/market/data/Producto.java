@@ -4,37 +4,37 @@ import java.math.BigDecimal;
 
 public class Producto {
 
-	private int id;
-	private String nombre;
-	private BigDecimal precio;
-	
-	public Producto(int id, String nombre, BigDecimal precio) {
-		this.id = id;
-		this.nombre = nombre;
-		this.precio = precio;
-	}
+    private int id;
+    private String nombre;
+    private BigDecimal precio;
 
-	public int getId() {
-		return id;
-	}
+    public Producto(int id, String nombre, BigDecimal precio) {
+	this.id = id;
+	this.nombre = nombre;
+	this.precio = precio;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+	return id;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setId(int id) {
+	this.id = id;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+	return nombre;
+    }
 
-	public BigDecimal getPrecio() {
-		return precio;
-	}
+    public void setNombre(String nombre) {
+	this.nombre = nombre;
+    }
 
-	public void setPrecio(BigDecimal precio) {
-		this.precio = precio;
-	}
+    public BigDecimal getPrecio() {
+	return precio;
+    }
+
+    public void setPrecio(BigDecimal precio) {
+	this.precio = precio;
+    }
 }

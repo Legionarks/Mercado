@@ -4,44 +4,34 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 
 public class ProductoComprar {
-	
-	private Producto producto;
-	private int cantidad;
-	private BigDecimal total;
 
-	public ProductoComprar(Producto producto, int cantidad) {
-		this.producto = producto;
-		this.cantidad = cantidad;
-		this.total = this.calcularTotal();
-	}
+    private Producto producto;
+    private int cantidad;
 
-	public Producto getProducto() {
-		return producto;
-	}
+    public ProductoComprar(Producto producto, int cantidad) {
+	this.producto = producto;
+	this.cantidad = cantidad;
+    }
 
-	public void setProducto(Producto producto) {
-		this.producto = producto;
-	}
+    public Producto getProducto() {
+	return producto;
+    }
 
-	public int getCantidad() {
-		return cantidad;
-	}
+    public void setProducto(Producto producto) {
+	this.producto = producto;
+    }
 
-	public void setCantidad(int cantidad) {
-		this.cantidad = cantidad;
-	}
-	
-	public BigDecimal getTotal() {
-		return this.total;
-	}
+    public int getCantidad() {
+	return cantidad;
+    }
 
-	public void setTotal(BigDecimal total) {
-		this.total = total;
-	}
-	
-	private BigDecimal calcularTotal() {
-		BigDecimal total = BigDecimal.valueOf(this.cantidad * this.producto.getPrecio().doubleValue());
-		
-		return total.setScale(2, RoundingMode.CEILING);
-	}
+    public void setCantidad(int cantidad) {
+	this.cantidad = cantidad;
+    }
+
+    public BigDecimal calcularTotal() {
+	BigDecimal total = BigDecimal.valueOf(this.cantidad * this.producto.getPrecio().doubleValue());
+
+	return total.setScale(2, RoundingMode.CEILING);
+    }
 }
