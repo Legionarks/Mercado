@@ -7,7 +7,6 @@ import java.util.List;
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.ProductoComprar;
-import edu.pucmm.market.data.Usuario;
 
 public class SimularDatos {
 
@@ -18,7 +17,7 @@ public class SimularDatos {
     }
 
     private void usuarioDefecto() {
-	Mercado.getUsuarios().add(new Usuario("admin", "admin", "admin"));
+	Mercado.crearUsuario("admin", "admin", "admin");
     }
 
     private void productosDefecto() {

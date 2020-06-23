@@ -1,21 +1,15 @@
 package edu.pucmm.market.data;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
 import java.util.List;
 
 import edu.pucmm.market.services.ProductoServicio;
+import edu.pucmm.market.services.UsuarioServicio;
 import edu.pucmm.market.services.VentaServicio;
 
 public class Mercado {
 
-    private static final List<Usuario> USUARIOS = new ArrayList<Usuario>();
-
     public Mercado() {
-    }
-
-    public static List<Usuario> getUsuarios() {
-	return USUARIOS;
     }
 
     public static List<VentasProductos> getVentasProductos() {
@@ -57,42 +51,35 @@ public class Mercado {
 	return ok;
     }
 
-    public static Usuario autenticarUsuario(String nombreUsuario, String password) {
-	Usuario usuario = buscarUsuario(nombreUsuario);
+    public static Usuario autenticarUsuario(String idUsuario, String password) {
+	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario, password);
+	System.out.println(usuario);
 
-	if (usuario != null) {
-	    if (usuario.getPassword().equals(password)) {
-		return usuario;
-	    }
-	}
-
-	return null;
-    }
-
-    private static Usuario buscarUsuario(String nombreUsuario) {
-	for (Usuario auxUsuario : USUARIOS) {
-	    if (auxUsuario.getUsuario().equals(nombreUsuario)) {
-		return auxUsuario;
-	    }
-	}
-
-	return null;
+	return usuario;
     }
 
     public static boolean procesarCompra(String cliente, CarroCompra carrito) {
 	boolean ok = false;
 	VentasProductos ventasProductos;
-	
+
 	if (!(carrito.getListaProductos().isEmpty())) {
 	    ventasProductos = new VentasProductos(1, cliente, carrito.getListaProductos());
 	    ok = VentaServicio.crearVenta(ventasProductos);
 	    carrito.limpiarCarrito();
 	}
-	
+
 	return ok;
     }
 
     public static VentasProductos buscarVenta(long id) {
 	return VentaServicio.buscarVenta(id);
+    }
+
+    public static boolean crearUsuario(String usuario, String nombre, String password) {
+	boolean ok = false;
+
+	ok = UsuarioServicio.crearUsuario(new Usuario(usuario, nombre, password));
+
+	return ok;
     }
 }

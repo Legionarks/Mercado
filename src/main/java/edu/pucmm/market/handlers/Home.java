@@ -28,7 +28,8 @@ public class Home extends ServerHandler {
 		get(ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("productos", Mercado.getProductos());
-		    modelo.put("carrito_cantidad", (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+		    modelo.put("carrito_cantidad",
+			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/index.html", modelo);
 		});
@@ -112,8 +113,13 @@ public class Home extends ServerHandler {
 			ctx.redirect("/administrar/productos");
 		    } else {
 			usuario = Mercado.autenticarUsuario(nombreUsuario, password);
-			ctx.sessionAttribute("usuario", usuario);
-			ctx.redirect("/");
+
+			if (usuario != null) {
+			    ctx.sessionAttribute("usuario", usuario);
+			    ctx.redirect("/");
+			} else {
+			    ctx.redirect("/autenticar");
+			}
 		    }
 		});
 	    });

@@ -62,7 +62,7 @@ public class DBServicio {
 
         String usuario = "CREATE TABLE IF NOT EXISTS USUARIO\n" +
                 "(\n" +
-                "  USUARIO VARCHAR(50) PRIMARY KEY NOT NULL,\n" +
+                "  ID_USUARIO VARCHAR(50) PRIMARY KEY,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
                 "  PASSWORD VARCHAR(100) NOT NULL,\n" +
                 ");";
