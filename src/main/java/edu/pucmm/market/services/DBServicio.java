@@ -17,7 +17,6 @@ public class DBServicio {
 	this.registrarDriver();
 	iniciarDB();
 	probarConexion();
-	crearTablas();
     }
 
     private void registrarDriver() {
@@ -108,4 +107,24 @@ public class DBServicio {
 	statement.close();
 	connection.close();
     }
+    
+    public static void borrarTablas() throws SQLException {
+	Connection connection = getConexion();
+	Statement statement = connection.createStatement();
+
+        String usuario = "DROP TABLE IF EXISTS USUARIO;";
+        String producto = "DROP TABLE IF EXISTS PRODUCTO;";
+        String producto_comprado = "DROP TABLE IF EXISTS PRODUCTO_COMPRADO;";
+        String venta = "DROP TABLE IF EXISTS VENTA;";
+        String venta_producto = "DROP TABLE IF EXISTS VENTA_PRODUCTO;";
+        
+	statement.execute(usuario);
+	statement.execute(producto);
+	statement.execute(producto_comprado);
+	statement.execute(venta);
+	statement.execute(venta_producto);
+
+	statement.close();
+	connection.close();
+    }    
 }

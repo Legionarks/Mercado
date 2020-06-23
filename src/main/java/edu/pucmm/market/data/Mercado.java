@@ -49,6 +49,8 @@ public class Mercado {
 	    auxProducto = new Producto(1, nombre, precio);
 	    ok = ProductoServicio.crearProducto(auxProducto, false);
 	} else {
+	    auxProducto.setNombre(nombre);
+	    auxProducto.setPrecio(precio);
 	    ok = ProductoServicio.editarProducto(auxProducto);
 	}
 

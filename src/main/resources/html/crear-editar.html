@@ -14,7 +14,7 @@
 			<label for="nombre">Nombre</label>
 			<input type="text" id="nombre" name="nombre" class="form-control" placeholder="Nombre" th:value="${producto.nombre}" required autofocus>
 			<label for="precio">Precio</label>
-			<input type="number" id="precio" name="precio" class="form-control" placeholder="Precio" th:value="${producto.precio}" min="0" required>
+			<input type="number" id="precio" name="precio" class="form-control" placeholder="Precio" th:value="${producto.precio}" min="0" step=".01" required>
 		</form>
 		<button class="btn btn-primary" form="crear-editar" type="submit">Aceptar</button>
 		<a class="btn btn-default" role="button" href="/administrar/productos">Cancelar</a>

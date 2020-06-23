@@ -32,7 +32,9 @@ public class Main {
 	    }).start(7000);
 
 	    registrarPlantilla();
-
+	    
+	    DBServicio.borrarTablas();
+	    DBServicio.crearTablas();
 	    new SimularDatos();
 	    new Home(app).rutas();
 	} catch (SQLException e) {
