@@ -19,6 +19,9 @@ public class VentasProductos {
 	this.listaProductos = listaProductos;
     }
 
+    public VentasProductos() {
+    }
+
     public long getId() {
 	return id;
     }

@@ -4,11 +4,13 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pucmm.market.services.ProductoServicio;
+
 public class Mercado {
 
     private static final List<Usuario> USUARIOS = new ArrayList<Usuario>();
     private static final List<VentasProductos> VENTAS_PRODUCTOS = new ArrayList<VentasProductos>();
-    private static final List<Producto> PRODUCTOS = new ArrayList<Producto>();
+    // private static final List<Producto> PRODUCTOS = new ArrayList<Producto>();
 
     public Mercado() {
     }
@@ -22,25 +24,32 @@ public class Mercado {
     }
 
     public static List<Producto> getProductos() {
-	return PRODUCTOS;
+	// return PRODUCTOS;
+	return ProductoServicio.getProductos();
     }
 
-    public static void eliminarProducto(int id) {
+    public static boolean eliminarProducto(int id) {
+	boolean ok = false;
 	Producto auxProducto = buscarProducto(id);
 
 	if (auxProducto != null) {
-	    PRODUCTOS.remove(auxProducto);
+	    // PRODUCTOS.remove(auxProducto);
+	    // ok = true;
+	    ok = ProductoServicio.eliminarProducto(auxProducto);
 	}
+
+	return ok;
     }
 
     public static Producto buscarProducto(int id) {
-	for (Producto auxProducto : PRODUCTOS) {
-	    if (auxProducto.getId() == id) {
-		return auxProducto;
-	    }
-	}
-
-	return null;
+	// for (Producto auxProducto : PRODUCTOS) {
+	// if (auxProducto.getId() == id) {
+	// return auxProducto;
+	// }
+	// }
+	//
+	// return null;
+	return ProductoServicio.buscarProducto(id);
     }
 
     private static int generarIdProducto() {
@@ -53,16 +62,23 @@ public class Mercado {
 	return id;
     }
 
-    public static void crearEditarProducto(int id, String nombre, BigDecimal precio) {
+    public static boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
+	boolean ok = false;
 	Producto auxProducto = buscarProducto(id);
 
 	if (id == -1 || auxProducto == null) {
 	    auxProducto = new Producto(generarIdProducto(), nombre, precio);
-	    PRODUCTOS.add(auxProducto);
+	    // PRODUCTOS.add(auxProducto);
+	    // ok = true;
+	    ok = ProductoServicio.crearProducto(auxProducto);
 	} else {
-	    auxProducto.setNombre(nombre);
-	    auxProducto.setPrecio(precio);
+	    // auxProducto.setNombre(nombre);
+	    // auxProducto.setPrecio(precio);
+	    // ok = true;
+	    ok = ProductoServicio.editarProducto(auxProducto);
 	}
+
+	return ok;
     }
 
     public static Usuario autenticarUsuario(String nombreUsuario, String password) {

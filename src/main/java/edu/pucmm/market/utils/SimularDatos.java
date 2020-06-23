@@ -23,13 +23,13 @@ public class SimularDatos {
     }
 
     private void productosDefecto() {
-	Mercado.getProductos().add(new Producto(1, "Apio", BigDecimal.valueOf(55.25)));
-	Mercado.getProductos().add(new Producto(2, "Recaito", BigDecimal.valueOf(20.00)));
-	Mercado.getProductos().add(new Producto(3, "Pollo", BigDecimal.valueOf(385.95)));
-	Mercado.getProductos().add(new Producto(4, "Paquete de pan", BigDecimal.valueOf(80.20)));
-	Mercado.getProductos().add(new Producto(5, "Queso", BigDecimal.valueOf(90.15)));
-	Mercado.getProductos().add(new Producto(6, "Manzana", BigDecimal.valueOf(15.15)));
-	Mercado.getProductos().add(new Producto(7, "Piña", BigDecimal.valueOf(45.00)));
+	Mercado.crearEditarProducto(1, "Apio", BigDecimal.valueOf(55.25));
+	Mercado.crearEditarProducto(2, "Recaito", BigDecimal.valueOf(20.00));
+	Mercado.crearEditarProducto(3, "Pollo", BigDecimal.valueOf(385.95));
+	Mercado.crearEditarProducto(4, "Paquete de pan", BigDecimal.valueOf(80.20));
+	Mercado.crearEditarProducto(5, "Queso", BigDecimal.valueOf(90.15));
+	Mercado.crearEditarProducto(6, "Manzana", BigDecimal.valueOf(15.15));
+	Mercado.crearEditarProducto(7, "Piña", BigDecimal.valueOf(45.00));
     }
 
     private void ventasDefecto() {

@@ -28,8 +28,7 @@ public class Home extends ServerHandler {
 		get(ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("productos", Mercado.getProductos());
-		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+		    modelo.put("carrito_cantidad", (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/index.html", modelo);
 		});
