@@ -5,12 +5,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import edu.pucmm.market.services.ProductoServicio;
+import edu.pucmm.market.services.VentaServicio;
 
 public class Mercado {
 
     private static final List<Usuario> USUARIOS = new ArrayList<Usuario>();
-    private static final List<VentasProductos> VENTAS_PRODUCTOS = new ArrayList<VentasProductos>();
-    // private static final List<Producto> PRODUCTOS = new ArrayList<Producto>();
 
     public Mercado() {
     }
@@ -20,12 +19,11 @@ public class Mercado {
     }
 
     public static List<VentasProductos> getVentasProductos() {
-	return VENTAS_PRODUCTOS;
+	return VentaServicio.getVentas();
     }
 
     public static List<Producto> getProductos() {
-	// return PRODUCTOS;
-	return ProductoServicio.getProductos();
+	return ProductoServicio.getProductos(false);
     }
 
     public static boolean eliminarProducto(int id) {
@@ -33,8 +31,6 @@ public class Mercado {
 	Producto auxProducto = buscarProducto(id);
 
 	if (auxProducto != null) {
-	    // PRODUCTOS.remove(auxProducto);
-	    // ok = true;
 	    ok = ProductoServicio.eliminarProducto(auxProducto);
 	}
 
@@ -42,24 +38,7 @@ public class Mercado {
     }
 
     public static Producto buscarProducto(int id) {
-	// for (Producto auxProducto : PRODUCTOS) {
-	// if (auxProducto.getId() == id) {
-	// return auxProducto;
-	// }
-	// }
-	//
-	// return null;
-	return ProductoServicio.buscarProducto(id);
-    }
-
-    private static int generarIdProducto() {
-	int id;
-
-	do {
-	    id = (int) (Math.random() * Integer.MAX_VALUE);
-	} while (buscarProducto(id) != null);
-
-	return id;
+	return ProductoServicio.buscarProducto(id, false);
     }
 
     public static boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
@@ -67,14 +46,9 @@ public class Mercado {
 	Producto auxProducto = buscarProducto(id);
 
 	if (id == -1 || auxProducto == null) {
-	    auxProducto = new Producto(generarIdProducto(), nombre, precio);
-	    // PRODUCTOS.add(auxProducto);
-	    // ok = true;
-	    ok = ProductoServicio.crearProducto(auxProducto);
+	    auxProducto = new Producto(1, nombre, precio);
+	    ok = ProductoServicio.crearProducto(auxProducto, false);
 	} else {
-	    // auxProducto.setNombre(nombre);
-	    // auxProducto.setPrecio(precio);
-	    // ok = true;
 	    ok = ProductoServicio.editarProducto(auxProducto);
 	}
 
@@ -103,30 +77,20 @@ public class Mercado {
 	return null;
     }
 
-    public static void procesarCompra(String cliente, CarroCompra carrito) {
+    public static boolean procesarCompra(String cliente, CarroCompra carrito) {
+	boolean ok = false;
+	VentasProductos ventasProductos;
+	
 	if (!(carrito.getListaProductos().isEmpty())) {
-	    VENTAS_PRODUCTOS.add(new VentasProductos(generarIdVenta(), cliente, carrito.getListaProductos()));
+	    ventasProductos = new VentasProductos(1, cliente, carrito.getListaProductos());
+	    ok = VentaServicio.crearVenta(ventasProductos);
 	    carrito.limpiarCarrito();
 	}
+	
+	return ok;
     }
 
-    private static long generarIdVenta() {
-	long id = 0;
-
-	do {
-	    id = (long) (Math.random() * Long.MAX_VALUE);
-	} while (buscarVenta(id) != null);
-
-	return id;
-    }
-
-    private static VentasProductos buscarVenta(long id) {
-	for (VentasProductos auxVenta : VENTAS_PRODUCTOS) {
-	    if (auxVenta.getId() == id) {
-		return auxVenta;
-	    }
-	}
-
-	return null;
+    public static VentasProductos buscarVenta(long id) {
+	return VentaServicio.buscarVenta(id);
     }
 }

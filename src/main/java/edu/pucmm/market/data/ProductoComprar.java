@@ -13,6 +13,9 @@ public class ProductoComprar {
 	this.cantidad = cantidad;
     }
 
+    public ProductoComprar() {
+    }
+
     public Producto getProducto() {
 	return producto;
     }

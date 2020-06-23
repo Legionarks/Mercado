@@ -4,11 +4,10 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
-import edu.pucmm.market.data.Producto;
 import edu.pucmm.market.data.ProductoComprar;
 import edu.pucmm.market.data.Usuario;
-import edu.pucmm.market.data.VentasProductos;
 
 public class SimularDatos {
 
@@ -33,22 +32,28 @@ public class SimularDatos {
     }
 
     private void ventasDefecto() {
-	List<ProductoComprar> carro = new ArrayList<ProductoComprar>();
-	carro.add(new ProductoComprar(Mercado.getProductos().get(1), 5));
-	carro.add(new ProductoComprar(Mercado.getProductos().get(3), 11));
-	carro.add(new ProductoComprar(Mercado.getProductos().get(5), 3));
-	Mercado.getVentasProductos().add(new VentasProductos(1, "Jorge", carro));
+	CarroCompra carro = new CarroCompra(1);
+	List<ProductoComprar> lista = new ArrayList<ProductoComprar>();
+	carro.setListaProductos(lista);
+	lista.add(new ProductoComprar(Mercado.getProductos().get(1), 5));
+	lista.add(new ProductoComprar(Mercado.getProductos().get(3), 11));
+	lista.add(new ProductoComprar(Mercado.getProductos().get(5), 3));
+	Mercado.procesarCompra("Jorge", carro);
 
-	List<ProductoComprar> carroBibi = new ArrayList<ProductoComprar>();
-	carroBibi.add(new ProductoComprar(Mercado.getProductos().get(1), 4));
-	Mercado.getVentasProductos().add(new VentasProductos(2, "Bibi", carroBibi));
-
-	List<ProductoComprar> carroJohn = new ArrayList<ProductoComprar>();
-	carroJohn.add(new ProductoComprar(Mercado.getProductos().get(1), 5));
-	carroJohn.add(new ProductoComprar(Mercado.getProductos().get(2), 9));
-	carroJohn.add(new ProductoComprar(Mercado.getProductos().get(3), 3));
-	carroJohn.add(new ProductoComprar(Mercado.getProductos().get(4), 1));
-	carroJohn.add(new ProductoComprar(Mercado.getProductos().get(5), 8));
-	Mercado.getVentasProductos().add(new VentasProductos(3, "John", carroJohn));
+	CarroCompra carroBibi = new CarroCompra(2);
+	List<ProductoComprar> listaBibi = new ArrayList<ProductoComprar>();
+	carroBibi.setListaProductos(listaBibi);
+	listaBibi.add(new ProductoComprar(Mercado.getProductos().get(1), 4));
+	Mercado.procesarCompra("Bibi", carroBibi);
+	
+	CarroCompra carroJohn = new CarroCompra(3);
+	List<ProductoComprar> listaJohn = new ArrayList<ProductoComprar>();
+	carroJohn.setListaProductos(listaJohn);
+	listaJohn.add(new ProductoComprar(Mercado.getProductos().get(1), 5));
+	listaJohn.add(new ProductoComprar(Mercado.getProductos().get(2), 9));
+	listaJohn.add(new ProductoComprar(Mercado.getProductos().get(3), 3));
+	listaJohn.add(new ProductoComprar(Mercado.getProductos().get(4), 1));
+	listaJohn.add(new ProductoComprar(Mercado.getProductos().get(5), 8));
+	Mercado.procesarCompra("John", carroJohn);
     }
 }

@@ -26,6 +26,10 @@ public class CarroCompra {
     public List<ProductoComprar> getListaProductos() {
 	return listaProductos;
     }
+    
+    public void setListaProductos(List<ProductoComprar> listaProductos) {
+	this.listaProductos = listaProductos;
+    }
 
     public BigDecimal calcularTotal() {
 	BigDecimal total = new BigDecimal(0);

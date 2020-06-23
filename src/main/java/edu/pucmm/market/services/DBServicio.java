@@ -75,6 +75,13 @@ public class DBServicio {
                 "  PRECIO DECIMAL NOT NULL,\n" +
                 ");";
         
+        String producto_comprado = "CREATE TABLE IF NOT EXISTS PRODUCTO_COMPRADO\n" +
+                "(\n" +
+                "  ID_PRODUCTO INT PRIMARY KEY,\n" +
+                "  NOMBRE VARCHAR(100) NOT NULL,\n" +
+                "  PRECIO DECIMAL NOT NULL,\n" +
+                ");";
+        
         String venta = "CREATE TABLE IF NOT EXISTS VENTA\n" +
                 "(\n" +
                 "  ID_VENTA BIGINT PRIMARY KEY,\n" +
@@ -88,12 +95,13 @@ public class DBServicio {
                 "  ID_PRODUCTO INT,\n" +
                 "  CANTIDAD INT NOT NULL,\n" +
                 "  FOREIGN KEY (ID_VENTA) REFERENCES VENTA(ID_VENTA),\n" +
-                "  FOREIGN KEY (ID_PRODUCTO) REFERENCES PRODUCTO(ID_PRODUCTO),\n" +
+                "  FOREIGN KEY (ID_PRODUCTO) REFERENCES PRODUCTO_COMPRADO(ID_PRODUCTO),\n" +
                 "  PRIMARY KEY(ID_VENTA, ID_PRODUCTO),\n" +
                 ");";
         
 	statement.execute(usuario);
 	statement.execute(producto);
+	statement.execute(producto_comprado);
 	statement.execute(venta);
 	statement.execute(venta_producto);
 

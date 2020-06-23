@@ -36,6 +36,7 @@ public class Main {
 	    new SimularDatos();
 	    new Home(app).rutas();
 	} catch (SQLException e) {
+	    e.printStackTrace();
 	    try {
 		DBServicio.pararDB();
 	    } catch (SQLException ex) {

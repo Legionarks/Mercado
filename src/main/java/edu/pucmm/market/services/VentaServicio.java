@@ -1,6 +1,7 @@
 package edu.pucmm.market.services;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import edu.pucmm.market.data.Producto;
+import edu.pucmm.market.data.ProductoComprar;
 import edu.pucmm.market.data.VentasProductos;
 
 public class VentaServicio {
@@ -25,7 +27,7 @@ public class VentaServicio {
 	ResultSet resultSet;
 
 	try {
-	    query = "SELECT * FROM VENTA ";
+	    query = "SELECT * FROM VENTA";
 	    connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
@@ -36,24 +38,27 @@ public class VentaServicio {
 		ventasProductos.setId(resultSet.getLong("ID_VENTA"));
 		ventasProductos.setFechaCompra(resultSet.getDate("FECHA_COMPRA"));
 		ventasProductos.setNombreCliente(resultSet.getString("NOMBRE_CLIENTE"));
+		ventasProductos.setListaProductos(getVentaProductos(resultSet.getLong("ID_VENTA")));
 
 		lista.add(ventasProductos);
 	    }
 	} catch (SQLException e) {
-	    Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+	    Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	} finally {
 	    try {
 		connection.close();
 	    } catch (SQLException e) {
-		Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+		Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	    }
 	}
 
 	return lista;
     }
 
-    public static Producto buscarProducto(int id) {
-	Producto producto = null;
+    private static List<ProductoComprar> getVentaProductos(long id) {
+	List<ProductoComprar> lista = new ArrayList<ProductoComprar>();
+	ProductoComprar productoComprar;
+	Producto producto;
 
 	Connection connection = null;
 	String query;
@@ -62,100 +67,118 @@ public class VentaServicio {
 	ResultSet resultSet;
 
 	try {
-	    query = "SELECT * FROM PRODUCTO WHERE ID_PRODUCTO = ?";
+	    query = "SELECT * FROM VENTA_PRODUCTO WHERE ID_VENTA = ?";
 	    connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
-	    prepareStatement.setInt(1, id);
+	    prepareStatement.setLong(1, id);
 
 	    resultSet = prepareStatement.executeQuery();
 
 	    while (resultSet.next()) {
-		producto = new Producto();
-		producto.setId(resultSet.getInt("ID_PRODUCTO"));
-		producto.setNombre(resultSet.getString("NOMBRE"));
-		producto.setPrecio(resultSet.getBigDecimal("PRECIO"));
+		productoComprar = new ProductoComprar();
+		producto = ProductoServicio.buscarProducto(resultSet.getInt("ID_PRODUCTO"), true);
+		productoComprar.setProducto(producto);
+		productoComprar.setCantidad(resultSet.getInt("CANTIDAD"));
+
+		lista.add(productoComprar);
 	    }
 	} catch (SQLException e) {
-	    Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+	    Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	} finally {
 	    try {
 		connection.close();
 	    } catch (SQLException e) {
-		Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+		Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	    }
 	}
 
-	return producto;
+	return lista;
     }
 
-    public static boolean crearProducto(Producto producto) {
+    public static VentasProductos buscarVenta(long id) {
+	VentasProductos ventasProductos = null;
+
+	Connection connection = null;
+	String query;
+
+	PreparedStatement prepareStatement;
+	ResultSet resultSet;
+
+	try {
+	    query = "SELECT * FROM VENTA WHERE ID_VENTA = ?";
+	    connection = DBServicio.getConexion();
+
+	    prepareStatement = connection.prepareStatement(query);
+	    prepareStatement.setLong(1, id);
+
+	    resultSet = prepareStatement.executeQuery();
+
+	    while (resultSet.next()) {
+		ventasProductos = new VentasProductos();
+		ventasProductos.setId(resultSet.getLong("ID_VENTA"));
+		ventasProductos.setFechaCompra(resultSet.getDate("FECHA_COMPRA"));
+		ventasProductos.setNombreCliente(resultSet.getString("NOMBRE_CLIENTE"));
+		ventasProductos.setListaProductos(getVentaProductos(resultSet.getLong("ID_VENTA")));
+	    }
+	} catch (SQLException e) {
+	    Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
+	} finally {
+	    try {
+		connection.close();
+	    } catch (SQLException e) {
+		Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
+	    }
+	}
+
+	return ventasProductos;
+    }
+
+    public static boolean crearVenta(VentasProductos venta) {
 	boolean ok = false;
-	int filas;
 
 	Connection connection = null;
 	String query;
 
 	PreparedStatement prepareStatement;
 
+	venta.setId(generarIdVenta());
+
 	try {
-	    query = "INSERT INTO PRODUCTO(ID_PRODUCTO, NOMBRE, PRECIO) VALUES(?,?,?)";
+	    query = "INSERT INTO VENTA(ID_VENTA, FECHA_COMPRA, NOMBRE_CLIENTE) VALUES(?,?,?)";
 	    connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
-	    prepareStatement.setInt(1, producto.getId());
-	    prepareStatement.setString(2, producto.getNombre());
-	    prepareStatement.setBigDecimal(3, producto.getPrecio());
+	    prepareStatement.setLong(1, venta.getId());
+	    prepareStatement.setDate(2, new Date(venta.getFechaCompra().getTime()));
+	    prepareStatement.setString(3, venta.getNombreCliente());
 
-	    filas = prepareStatement.executeUpdate();
-	    ok = filas > 0;
+	    prepareStatement.executeUpdate();
+	    ok = venderProductos(venta.getId(), venta.getListaProductos());
 	} catch (SQLException e) {
-	    Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+	    Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	} finally {
 	    try {
 		connection.close();
 	    } catch (SQLException e) {
-		Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+		Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
 	    }
 	}
 
 	return ok;
     }
 
-    public static boolean editarProducto(Producto producto) {
-	boolean ok = false;
-	int filas;
+    private static long generarIdVenta() {
+	long id = 0;
 
-	Connection connection = null;
-	String query;
+	do {
+	    id = (long) (Math.random() * Long.MAX_VALUE);
+	} while (buscarVenta(id) != null);
 
-	PreparedStatement prepareStatement;
-
-	try {
-	    query = "UPDATE PRODUCTO SET NOMBRE = ?, PRECIO = ? WHERE ID_PRODUCTO = ?";
-	    connection = DBServicio.getConexion();
-
-	    prepareStatement = connection.prepareStatement(query);
-	    prepareStatement.setString(1, producto.getNombre());
-	    prepareStatement.setBigDecimal(2, producto.getPrecio());
-	    prepareStatement.setInt(3, producto.getId());
-
-	    filas = prepareStatement.executeUpdate();
-	    ok = filas > 0;
-	} catch (SQLException e) {
-	    Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
-	} finally {
-	    try {
-		connection.close();
-	    } catch (SQLException e) {
-		Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
-	    }
-	}
-
-	return ok;
+	return id;
     }
 
-    public static boolean eliminarProducto(Producto producto) {
+    private static boolean venderProductos(long idVenta, List<ProductoComprar> listaProductos) {
 	boolean ok = false;
 	int filas;
 
@@ -164,22 +187,28 @@ public class VentaServicio {
 
 	PreparedStatement prepareStatement;
 
-	try {
-	    query = "DELETE FROM PRODUCTO WHERE ID_PRODUCTO = ?";
-	    connection = DBServicio.getConexion();
+	for (ProductoComprar productoComprar : listaProductos) {
+	    ProductoServicio.crearProducto(productoComprar.getProducto(), true);
 
-	    prepareStatement = connection.prepareStatement(query);
-	    prepareStatement.setInt(1, producto.getId());
-
-	    filas = prepareStatement.executeUpdate();
-	    ok = filas > 0;
-	} catch (SQLException e) {
-	    Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
-	} finally {
 	    try {
-		connection.close();
+		query = "INSERT INTO VENTA_PRODUCTO(ID_VENTA, ID_PRODUCTO, CANTIDAD) VALUES(?,?,?)";
+		connection = DBServicio.getConexion();
+
+		prepareStatement = connection.prepareStatement(query);
+		prepareStatement.setLong(1, idVenta);
+		prepareStatement.setInt(2, productoComprar.getProducto().getId());
+		prepareStatement.setInt(3, productoComprar.getCantidad());
+
+		filas = prepareStatement.executeUpdate();
+		ok = filas > 0;
 	    } catch (SQLException e) {
-		Logger.getLogger(ProductoServicio.class.getName()).log(Level.SEVERE, null, e);
+		Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
+	    } finally {
+		try {
+		    connection.close();
+		} catch (SQLException e) {
+		    Logger.getLogger(VentaServicio.class.getName()).log(Level.SEVERE, null, e);
+		}
 	    }
 	}
 
