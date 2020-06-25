@@ -3,6 +3,8 @@ package edu.pucmm.market.data;
 import java.math.BigDecimal;
 import java.util.List;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import edu.pucmm.market.services.ProductoServicio;
 import edu.pucmm.market.services.UsuarioServicio;
 import edu.pucmm.market.services.VentaServicio;
@@ -51,9 +53,19 @@ public class Mercado {
 	return ok;
     }
 
-    public static Usuario autenticarUsuario(String idUsuario, String password) {
-	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario, password);
-	System.out.println(usuario);
+    public static Usuario autenticarUsuario(String idUsuario, String password, boolean encrypted) {
+	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario);
+	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
+	String encryptedPassword = passwordEncryptor.encryptPassword(usuario.getPassword());
+
+	if (usuario != null) {
+	    if (encrypted ? passwordEncryptor.checkPassword(usuario.getPassword(), password)
+		    : passwordEncryptor.checkPassword(password, encryptedPassword)) {
+		return usuario;
+	    } else {
+		usuario = null;
+	    }
+	}
 
 	return usuario;
     }

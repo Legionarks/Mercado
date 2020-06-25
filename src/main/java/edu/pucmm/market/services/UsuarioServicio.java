@@ -11,7 +11,7 @@ import edu.pucmm.market.data.Usuario;
 
 public class UsuarioServicio {
 
-    public static Usuario autenticarUsuario(String idUsuario, String password) {
+    public static Usuario autenticarUsuario(String idUsuario) {
 	Usuario usuario = null;
 
 	Connection connection = null;
@@ -21,12 +21,11 @@ public class UsuarioServicio {
 	ResultSet resultSet;
 
 	try {
-	    query = "SELECT * FROM USUARIO WHERE ID_USUARIO = ? AND PASSWORD = ?";
+	    query = "SELECT * FROM USUARIO WHERE ID_USUARIO = ?";
 	    connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setString(1, idUsuario);
-	    prepareStatement.setString(2, password);
 
 	    resultSet = prepareStatement.executeQuery();
 

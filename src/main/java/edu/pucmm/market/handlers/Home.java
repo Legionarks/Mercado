@@ -6,6 +6,8 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.jasypt.util.password.StrongPasswordEncryptor;
+
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Producto;
@@ -101,25 +103,47 @@ public class Home extends ServerHandler {
 
 	    path("/autenticar", () -> {
 		get(ctx -> {
-		    ctx.render("/html/login.html");
-		});
-
-		post(ctx -> {
-		    String nombreUsuario = ctx.formParam("usuario");
-		    String password = ctx.formParam("password");
+		    String idUsuario = ctx.cookie("usuario");
+		    String encryptedPassword = ctx.cookie("password");
 		    Usuario usuario;
 
 		    if ((Usuario) ctx.sessionAttribute("usuario") != null) {
 			ctx.redirect("/administrar/productos");
-		    } else {
-			usuario = Mercado.autenticarUsuario(nombreUsuario, password);
+		    } else if (idUsuario != null && encryptedPassword != null) {
+			usuario = Mercado.autenticarUsuario(idUsuario, encryptedPassword, true);
 
 			if (usuario != null) {
 			    ctx.sessionAttribute("usuario", usuario);
-			    ctx.redirect("/");
+			    ctx.redirect("/administrar/productos");
 			} else {
-			    ctx.redirect("/autenticar");
+			    ctx.render("/html/login.html");
 			}
+		    } else {
+			ctx.render("/html/login.html");
+		    }
+		});
+
+		post(ctx -> {
+		    String idUsuario = ctx.formParam("usuario");
+		    String password = ctx.formParam("password");
+		    boolean recordarme = ctx.formParam("recordarme") != null;
+
+		    Usuario usuario;
+		    String encryptedPassword = new StrongPasswordEncryptor().encryptPassword(password);
+
+		    usuario = Mercado.autenticarUsuario(idUsuario, password, false);
+
+		    if (usuario != null) {
+			ctx.sessionAttribute("usuario", usuario);
+
+			if (recordarme) {
+			    ctx.cookie("usuario", usuario.getUsuario(), 604800);
+			    ctx.cookie("password", encryptedPassword, 604800);
+			}
+
+			ctx.redirect("/");
+		    } else {
+			ctx.redirect("/autenticar");
 		    }
 		});
 	    });

@@ -3,25 +3,33 @@
 <head th:replace="/templates/plantilla.html :: head">
 </head>
 <body>
-	<div class="container">
-		<div class="mx-auto text-center">
-			<form class="form-signin" action="/autenticar" method="POST">
+	<div class="signin-container">
+		<div class="form-signin text-center">
+			<form action="/autenticar" method="POST">
 				<img class="mb-4"
 					src="https://img.icons8.com/pastel-glyph/64/000000/shop.png" alt=""
 					width="72" height="72">
-				<h1 class="h3 mb-3 font-weight-normal">Ingrese sus datos</h1>
-				<label for="usuario" class="sr-only">Usuario</label> <input
-					type="text" id="usuario" name="usuario" class="mb-3 form-control"
-					placeholder="Usuario" required autofocus> <label
-					for="password" class="mb-3 sr-only">Password</label> <input
-					type="password" id="password" name="password"
-					class="mb-3 form-control" placeholder="Password" required>
+				<h3 class="mb-3 font-weight-normal text-left">Ingrese sus datos</h3>
 
-				<button class="btn btn-lg btn-rounded btn-primary" type="submit">Iniciar
+				<div class="form-group">
+					<label for="usuario" class="sr-only">Usuario</label> <input
+						type="text" id="usuario" name="usuario" class="mb-3 form-control"
+						placeholder="Usuario" required autofocus>
+				</div>
+				<div class="form-group">
+					<label for="password" class="mb-3 sr-only">Password</label> <input
+						type="password" id="password" name="password"
+						class="mb-3 form-control" placeholder="Password" required>
+				</div>
+				<div class="form-group form-check text-left">
+					<input type="checkbox" class="form-check-input" id="recordarme" name="recordarme">
+					<label class="form-check-label" for="recordarme">Recordarme</label>
+				</div>
+
+				<button class="btn btn-block btn-rounded btn-primary" type="submit">Iniciar
 					sesion</button>
-				<a class="btn btn-lg btn-rounded btn-light" role="button" href="/">Cancelar</a>
-
-				<p class="mt-5 mb-3 text-muted">Jorge Michelen [2016-0876]</p>
+				<a class="btn btn-block btn-rounded btn-secondary" role="button"
+					href="/">Cancelar</a>
 			</form>
 		</div>
 	</div>

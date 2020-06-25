@@ -28,7 +28,7 @@ public class DBServicio {
     }
     
     public static void iniciarDB() throws SQLException {
-	Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers").start();
+	Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
     }
 
     public static void pararDB() throws SQLException {
@@ -64,28 +64,28 @@ public class DBServicio {
                 "(\n" +
                 "  ID_USUARIO VARCHAR(50) PRIMARY KEY,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  PASSWORD VARCHAR(100) NOT NULL,\n" +
+                "  PASSWORD VARCHAR(100) NOT NULL\n" +
                 ");";
         
         String producto = "CREATE TABLE IF NOT EXISTS PRODUCTO\n" +
                 "(\n" +
                 "  ID_PRODUCTO INT PRIMARY KEY,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  PRECIO DECIMAL NOT NULL,\n" +
+                "  PRECIO DECIMAL NOT NULL\n" +
                 ");";
         
         String producto_comprado = "CREATE TABLE IF NOT EXISTS PRODUCTO_COMPRADO\n" +
                 "(\n" +
                 "  ID_PRODUCTO INT PRIMARY KEY,\n" +
                 "  NOMBRE VARCHAR(100) NOT NULL,\n" +
-                "  PRECIO DECIMAL NOT NULL,\n" +
+                "  PRECIO DECIMAL NOT NULL\n" +
                 ");";
         
         String venta = "CREATE TABLE IF NOT EXISTS VENTA\n" +
                 "(\n" +
                 "  ID_VENTA BIGINT PRIMARY KEY,\n" +
                 "  FECHA_COMPRA DATE NOT NULL,\n" +
-                "  NOMBRE_CLIENTE VARCHAR(100) NOT NULL,\n" +
+                "  NOMBRE_CLIENTE VARCHAR(100) NOT NULL\n" +
                 ");";
         
         String venta_producto = "CREATE TABLE IF NOT EXISTS VENTA_PRODUCTO\n" +
@@ -95,7 +95,7 @@ public class DBServicio {
                 "  CANTIDAD INT NOT NULL,\n" +
                 "  FOREIGN KEY (ID_VENTA) REFERENCES VENTA(ID_VENTA),\n" +
                 "  FOREIGN KEY (ID_PRODUCTO) REFERENCES PRODUCTO_COMPRADO(ID_PRODUCTO),\n" +
-                "  PRIMARY KEY(ID_VENTA, ID_PRODUCTO),\n" +
+                "  PRIMARY KEY(ID_VENTA, ID_PRODUCTO)\n" +
                 ");";
         
 	statement.execute(usuario);
@@ -114,15 +114,15 @@ public class DBServicio {
 
         String usuario = "DROP TABLE IF EXISTS USUARIO;";
         String producto = "DROP TABLE IF EXISTS PRODUCTO;";
+        String venta_producto = "DROP TABLE IF EXISTS VENTA_PRODUCTO;";
         String producto_comprado = "DROP TABLE IF EXISTS PRODUCTO_COMPRADO;";
         String venta = "DROP TABLE IF EXISTS VENTA;";
-        String venta_producto = "DROP TABLE IF EXISTS VENTA_PRODUCTO;";
         
 	statement.execute(usuario);
 	statement.execute(producto);
+	statement.execute(venta_producto);
 	statement.execute(producto_comprado);
 	statement.execute(venta);
-	statement.execute(venta_producto);
 
 	statement.close();
 	connection.close();

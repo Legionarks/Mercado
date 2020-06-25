@@ -30,13 +30,13 @@ public class Main {
 		config.addStaticFiles("/templates");
 		config.addStaticFiles("/images");
 	    }).start(7000);
+	    new Home(app).rutas();
 
 	    registrarPlantilla();
 	    
 	    DBServicio.borrarTablas();
 	    DBServicio.crearTablas();
 	    new SimularDatos();
-	    new Home(app).rutas();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    try {
