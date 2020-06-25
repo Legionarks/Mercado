@@ -5,39 +5,42 @@
 <body>
 	<header th:replace="/templates/plantilla.html :: header"></header>
 
-	<div th:replace="/templates/plantilla.html :: titulo_ventana(titulo='Listado de Productos')"></div>
-	
-	<div class="container">
-		<table class="table table-bordered table-hover text-center">
-			<thead class="thead-dark">
-				<tr>
-					<th>Producto</th>
-					<th>Precio (RD$)</th>
-					<th>Cantidad</th>
-					<th>Accion</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="producto : ${productos}">
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='Listado de Productos')"></div>
+
+		<div class="container">
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
 					<tr>
-						<td th:text="${producto.nombre}"></td>
-						<td th:text="${producto.precio}"></td>
-						<td>
-							<form th:id="${producto.id}" action="/carrito/producto/agregar"
-								th:object="${producto}" method="POST">
-								<input type="hidden" name="id" th:value="${producto.id}" /> <input
-									class="form-control" type="number" value="1" min="1" max="100"
-									name="cantidad" required>
-							</form>
-						</td>
-						<td>
-							<button type="submit" th:form="${producto.id}"
-								class="btn btn-block btn-success btn-rounded">Agregar</button>
-						</td>
+						<th>Producto</th>
+						<th>Precio (RD$)</th>
+						<th>Cantidad</th>
+						<th>Accion</th>
 					</tr>
-				</th:block>
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					<th:block th:each="producto : ${productos}">
+						<tr>
+							<td th:text="${producto.nombre}"></td>
+							<td th:text="${producto.precio}"></td>
+							<td>
+								<form th:id="${producto.id}" action="/carrito/producto/agregar"
+									th:object="${producto}" method="POST">
+									<input type="hidden" name="id" th:value="${producto.id}" />
+									<input class="form-control" type="number" value="1" min="1"
+										max="100" name="cantidad" required>
+								</form>
+							</td>
+							<td>
+								<button type="submit" th:form="${producto.id}"
+									class="btn btn-block btn-success btn-rounded">Agregar</button>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</main>
 </body>
 </html>

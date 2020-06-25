@@ -5,15 +5,10 @@ html, body {
 
 body {
 	align-items: center;
-	background-color: #f5f5f5;
 }
 
 header {
-	background-color: paleturquoise;
-}
-
-.pref-nav a {
-	text-decoration: none;
+	margin: 100px;
 }
 
 .signin-container {

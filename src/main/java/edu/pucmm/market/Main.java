@@ -3,6 +3,9 @@ package edu.pucmm.market;
 import java.sql.SQLException;
 
 import edu.pucmm.market.data.Mercado;
+import edu.pucmm.market.handlers.AdministrarControlador;
+import edu.pucmm.market.handlers.CarritoControlador;
+import edu.pucmm.market.handlers.CuentaControlador;
 import edu.pucmm.market.handlers.Home;
 import edu.pucmm.market.services.DBServicio;
 import edu.pucmm.market.utils.SimularDatos;
@@ -30,9 +33,13 @@ public class Main {
 		config.addStaticFiles("/templates");
 		config.addStaticFiles("/images");
 	    }).start(7000);
-	    new Home(app).rutas();
-
+	    
 	    registrarPlantilla();
+	    
+	    new Home(app).rutas();
+	    new CuentaControlador(app).rutas();
+	    new CarritoControlador(app).rutas();
+	    new AdministrarControlador(app).rutas();
 	    
 	    DBServicio.borrarTablas();
 	    DBServicio.crearTablas();

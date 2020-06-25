@@ -5,45 +5,48 @@
 <body>
 	<header th:replace="/templates/plantilla.html :: header"></header>
 
-	<div th:replace="/templates/plantilla.html :: titulo_ventana(titulo='CRUD Productos')"></div>
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='CRUD Productos')"></div>
 
-	<div class="container">
-		<a href="/administrar/producto/crear" class="btn btn-success mb-2"
-			role="button">Crear Producto</a>
-			
-		<table class="table table-bordered table-hover text-center">
-			<thead class="thead-dark">
-				<tr>
-					<th>Producto</th>
-					<th>Precio (RD$)</th>
-					<th>Accion</th>
-				</tr>
-			</thead>
-			<tbody>
-				<th:block th:each="producto : ${productos}">
+		<div class="container">
+			<a href="/administrar/producto/crear" class="btn btn-success mb-2"
+				role="button">Crear Producto</a>
+
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
 					<tr>
-						<td th:text="${producto.nombre}"></td>
-						<td th:text="${producto.precio}"></td>
-						<td>
-							<form th:id="${producto.id} + 'editar'"
-								action="/administrar/producto/editar" th:object="${producto}"
-								method="POST">
-								<input type="hidden" name="id" th:value="${producto.id}" />
-								<button type="submit" th:form="${producto.id} + 'editar'"
-									class="btn btn-primary btn-block btn-rounded mb-2">Editar</button>
-							</form>
-							<form th:id="${producto.id} + 'eliminar'"
-								action="/administrar/producto/eliminar" th:object="${producto}"
-								method="POST">
-								<input type="hidden" name="id" th:value="${producto.id}" />
-								<button type="submit" th:form="${producto.id} + 'eliminar'"
-									class="btn btn-danger btn-block btn-rounded">Eliminar</button>
-							</form>
-						</td>
+						<th>Producto</th>
+						<th>Precio (RD$)</th>
+						<th>Accion</th>
 					</tr>
-				</th:block>
-			</tbody>
-		</table>
-	</div>
+				</thead>
+				<tbody>
+					<th:block th:each="producto : ${productos}">
+						<tr>
+							<td th:text="${producto.nombre}"></td>
+							<td th:text="${producto.precio}"></td>
+							<td>
+								<form th:id="${producto.id} + 'editar'"
+									action="/administrar/producto/editar" th:object="${producto}"
+									method="POST">
+									<input type="hidden" name="id" th:value="${producto.id}" />
+									<button type="submit" th:form="${producto.id} + 'editar'"
+										class="btn btn-primary btn-block btn-rounded mb-2">Editar</button>
+								</form>
+								<form th:id="${producto.id} + 'eliminar'"
+									action="/administrar/producto/eliminar" th:object="${producto}"
+									method="POST">
+									<input type="hidden" name="id" th:value="${producto.id}" />
+									<button type="submit" th:form="${producto.id} + 'eliminar'"
+										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</main>
 </body>
 </html>

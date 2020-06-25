@@ -5,55 +5,60 @@
 <body>
 	<header th:replace="/templates/plantilla.html :: header"></header>
 
-	<div th:replace="/templates/plantilla.html :: titulo_ventana(titulo='Carrito de Compra')"></div>
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='Carrito de Compra')"></div>
+			
+		<div class="container">
+			<form id="carrito" action="/carrito/comprar" method="post">
+				<h5>Datos del Cliente</h5>
+				<br>
+				<label for="cliente">Nombre del Cliente</label>
+				<input type="text" id="cliente" name="cliente" required>
+			</form>
 
-	<div class="container">
-		<form id="carrito" action="/carrito/comprar" method="post">
-			<h5>Datos del Cliente</h5>
-			<br> <label for="cliente">Nombre del Cliente</label> <input
-				type="text" id="cliente" name="cliente" required>
-		</form>
-
-		<table class="table table-bordered table-hover text-center">
-			<thead class="thead-dark">
-				<tr>
-					<th>Producto</th>
-					<th>Precio (RD$)</th>
-					<th>Cantidad</th>
-					<th>Total (RD$)</th>
-					<th>Accion</th>
-				</tr>
-			<tbody>
-				<th:block th:each="compra : ${carrito.listaProductos}">
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
 					<tr>
-						<td th:text="${compra.producto.nombre}"></td>
-						<td th:text="${compra.producto.precio}"></td>
-						<td th:text="${compra.cantidad}"></td>
-						<td th:text="${compra.calcularTotal}"></td>
-						<td>
-							<form th:id="${compra.producto.id}"
-								action="/carrito/producto/eliminar" method="post">
-								<input type="hidden" name="id" th:value="${compra.producto.id}">
-								<button type="submit" th:form="${compra.producto.id}"
-									class="btn btn-danger btn-block btn-rounded">Eliminar</button>
-							</form>
-						</td>
+						<th>Producto</th>
+						<th>Precio (RD$)</th>
+						<th>Cantidad</th>
+						<th>Total (RD$)</th>
+						<th>Accion</th>
 					</tr>
-				</th:block>
-			</tbody>
-			<tfoot class="text-right table-active font-weight-bold">
-				<tr>
-					<td th:text="'Total: ' + ${total}" colspan="5"></td>
-				</tr>
-			</tfoot>
-		</table>
+				</thead>
+				<tbody>
+					<th:block th:each="compra : ${carrito.listaProductos}">
+						<tr>
+							<td th:text="${compra.producto.nombre}"></td>
+							<td th:text="${compra.producto.precio}"></td>
+							<td th:text="${compra.cantidad}"></td>
+							<td th:text="${compra.calcularTotal}"></td>
+							<td>
+								<form th:id="${compra.producto.id}"
+									action="/carrito/producto/eliminar" method="post">
+									<input type="hidden" name="id" th:value="${compra.producto.id}">
+									<button type="submit" th:form="${compra.producto.id}"
+										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+				<tfoot class="text-right table-active font-weight-bold">
+					<tr>
+						<td th:text="'Total: ' + ${total}" colspan="5"></td>
+					</tr>
+				</tfoot>
+			</table>
 
-		<div class="mx-auto text-center">
-			<button class="btn btn-primary" form="carrito" type="submit">Procesar
-				Compra</button>
-			<a class="btn btn-danger" role="button" href="/carrito/limpiar">Limpiar
-				Carro Compra</a>
+			<div class="mx-auto text-center">
+				<button class="btn btn-primary" form="carrito" type="submit">Procesar
+					Compra</button>
+				<a class="btn btn-danger" role="button" href="/carrito/limpiar">Limpiar
+					Carro Compra</a>
+			</div>
 		</div>
-	</div>
+	</main>
 </body>
 </html>
