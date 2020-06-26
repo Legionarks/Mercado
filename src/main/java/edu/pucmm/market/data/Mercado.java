@@ -55,10 +55,13 @@ public class Mercado {
 
     public static Usuario autenticarUsuario(String idUsuario, String password, boolean encrypted) {
 	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario);
-	StrongPasswordEncryptor passwordEncryptor = new StrongPasswordEncryptor();
-	String encryptedPassword = passwordEncryptor.encryptPassword(usuario.getPassword());
+	StrongPasswordEncryptor passwordEncryptor;
+	String encryptedPassword;
 
 	if (usuario != null) {
+	    passwordEncryptor = new StrongPasswordEncryptor();
+	    encryptedPassword = passwordEncryptor.encryptPassword(usuario.getPassword());
+	    
 	    if (encrypted ? passwordEncryptor.checkPassword(usuario.getPassword(), password)
 		    : passwordEncryptor.checkPassword(password, encryptedPassword)) {
 		return usuario;

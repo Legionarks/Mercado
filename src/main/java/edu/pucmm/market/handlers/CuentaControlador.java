@@ -47,7 +47,7 @@ public class CuentaControlador extends ServerHandler {
 
 			ctx.redirect("/");
 		    } else {
-			ctx.redirect("/logear");
+			ctx.redirect("/cuenta/logear");
 		    }
 		});
 
