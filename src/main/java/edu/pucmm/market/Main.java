@@ -20,8 +20,6 @@ public class Main {
     public static void main(String[] args) {
 
 	try {
-	    dbServicio = new DBServicio();
-
 	    app = Javalin.create(config -> {
 		config.addStaticFiles("/html");
 		config.addStaticFiles("/css");
@@ -30,7 +28,8 @@ public class Main {
 	    }).start(7000);
 
 	    registrarPlantilla();
-
+	    
+	    dbServicio = new DBServicio();
 	    dbServicio.borrarTablas();
 	    dbServicio.crearTablas();
 	    new SimularDatos();
