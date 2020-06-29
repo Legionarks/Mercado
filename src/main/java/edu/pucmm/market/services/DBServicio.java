@@ -16,7 +16,7 @@ public class DBServicio {
 
     public DBServicio() throws SQLException {
 	this.registrarDriver();
-	iniciarDB();
+	this.iniciarDB();
 	probarConexion();
     }
 
@@ -28,11 +28,11 @@ public class DBServicio {
 	}
     }
     
-    public static void iniciarDB() throws SQLException {
+    public void iniciarDB() throws SQLException {
 	server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-tcpDaemon", "-ifNotExists").start();
     }
 
-    public static void pararDB() throws SQLException {
+    public void pararDB() throws SQLException {
 	server.shutdown();
     }
 
@@ -56,7 +56,7 @@ public class DBServicio {
 	}
     }
     
-    public static void crearTablas() throws SQLException {
+    public void crearTablas() throws SQLException {
 	Connection connection = getConexion();
 	Statement statement = connection.createStatement();
 
@@ -108,7 +108,7 @@ public class DBServicio {
 	connection.close();
     }
     
-    public static void borrarTablas() throws SQLException {
+    public void borrarTablas() throws SQLException {
 	Connection connection = getConexion();
 	Statement statement = connection.createStatement();
 
