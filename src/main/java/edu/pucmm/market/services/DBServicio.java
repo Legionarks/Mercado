@@ -11,6 +11,7 @@ import org.h2.tools.Server;
 
 public class DBServicio {
 
+    private static Server server;
     private static final String URL = "jdbc:h2:tcp://localhost/~/Mercado";
 
     public DBServicio() throws SQLException {
@@ -28,11 +29,11 @@ public class DBServicio {
     }
     
     public static void iniciarDB() throws SQLException {
-	Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-ifNotExists").start();
+	server = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-tcpDaemon", "-ifNotExists").start();
     }
 
     public static void pararDB() throws SQLException {
-	Server.shutdownTcpServer("tcp://localhost:9092", "", true, true);
+	server.shutdown();
     }
 
     public static Connection getConexion() {
@@ -50,7 +51,6 @@ public class DBServicio {
     public static void probarConexion() {
 	try {
 	    getConexion().close();
-	    System.out.println("Conexion realizada satisfactoriamente...");
 	} catch (SQLException e) {
 	    Logger.getLogger(DBServicio.class.getName()).log(Level.SEVERE, null, e);
 	}
