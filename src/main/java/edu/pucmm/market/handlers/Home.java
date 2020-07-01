@@ -13,20 +13,20 @@ import io.javalin.Javalin;
 
 public class Home extends ServerHandler {
 
-    public Home(Javalin app) {
-	super(app);
+    public Home(Mercado mercado, Javalin app) {
+	super(mercado, app);
     }
 
     @Override
     public void rutas() {
 
-	app.routes(() -> {
+	getApp().routes(() -> {
 
 	    path("/", () -> {
 		get(ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("productos", Mercado.getProductos());
+		    modelo.put("productos", getMercado().getProductos());
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
@@ -35,7 +35,7 @@ public class Home extends ServerHandler {
 	    });
 	});
 
-	app.before(ctx -> {
+	getApp().before(ctx -> {
 	    Usuario usuario = ctx.sessionAttribute("usuario");
 	    String idUsuario;
 	    String encryptedPassword;
@@ -47,7 +47,7 @@ public class Home extends ServerHandler {
 
 		if (idUsuario != null && encryptedPassword != null) {
 		    if (!((idUsuario + encryptedPassword).isBlank() || (idUsuario + encryptedPassword).isEmpty())) {
-			usuario = Mercado.autenticarUsuario(idUsuario, encryptedPassword, true);
+			usuario = getMercado().autenticarUsuario(idUsuario, encryptedPassword, true);
 
 			if (usuario != null) {
 			    ctx.sessionAttribute("usuario", usuario);

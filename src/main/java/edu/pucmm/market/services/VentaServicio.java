@@ -28,7 +28,7 @@ public class VentaServicio {
 
 	try {
 	    query = "SELECT * FROM VENTA";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    resultSet = prepareStatement.executeQuery();
@@ -68,7 +68,7 @@ public class VentaServicio {
 
 	try {
 	    query = "SELECT * FROM VENTA_PRODUCTO WHERE ID_VENTA = ?";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setLong(1, id);
@@ -107,7 +107,7 @@ public class VentaServicio {
 
 	try {
 	    query = "SELECT * FROM VENTA WHERE ID_VENTA = ?";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setLong(1, id);
@@ -146,7 +146,7 @@ public class VentaServicio {
 
 	try {
 	    query = "INSERT INTO VENTA(ID_VENTA, FECHA_COMPRA, NOMBRE_CLIENTE) VALUES(?,?,?)";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setLong(1, venta.getId());
@@ -192,7 +192,7 @@ public class VentaServicio {
 
 	    try {
 		query = "INSERT INTO VENTA_PRODUCTO(ID_VENTA, ID_PRODUCTO, CANTIDAD) VALUES(?,?,?)";
-		connection = DBServicio.getConexion();
+		// connection = DBServicio.getConexion();
 
 		prepareStatement = connection.prepareStatement(query);
 		prepareStatement.setLong(1, idVenta);

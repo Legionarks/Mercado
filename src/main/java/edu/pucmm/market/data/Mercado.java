@@ -14,15 +14,15 @@ public class Mercado {
     public Mercado() {
     }
 
-    public static List<VentasProductos> getVentasProductos() {
+    public List<VentasProductos> getVentasProductos() {
 	return VentaServicio.getVentas();
     }
 
-    public static List<Producto> getProductos() {
+    public List<Producto> getProductos() {
 	return ProductoServicio.getProductos(false);
     }
 
-    public static boolean eliminarProducto(int id) {
+    public boolean eliminarProducto(int id) {
 	boolean ok = false;
 	Producto auxProducto = buscarProducto(id);
 
@@ -33,11 +33,11 @@ public class Mercado {
 	return ok;
     }
 
-    public static Producto buscarProducto(int id) {
+    public Producto buscarProducto(int id) {
 	return ProductoServicio.buscarProducto(id, false);
     }
 
-    public static boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
+    public boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
 	boolean ok = false;
 	Producto auxProducto = buscarProducto(id);
 
@@ -53,7 +53,7 @@ public class Mercado {
 	return ok;
     }
 
-    public static Usuario autenticarUsuario(String idUsuario, String password, boolean encrypted) {
+    public Usuario autenticarUsuario(String idUsuario, String password, boolean encrypted) {
 	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario);
 	StrongPasswordEncryptor passwordEncryptor;
 	String encryptedPassword;
@@ -73,7 +73,7 @@ public class Mercado {
 	return usuario;
     }
 
-    public static boolean procesarCompra(String cliente, CarroCompra carrito) {
+    public boolean procesarCompra(String cliente, CarroCompra carrito) {
 	boolean ok = false;
 	VentasProductos ventasProductos;
 
@@ -86,11 +86,11 @@ public class Mercado {
 	return ok;
     }
 
-    public static VentasProductos buscarVenta(long id) {
+    public VentasProductos buscarVenta(long id) {
 	return VentaServicio.buscarVenta(id);
     }
 
-    public static boolean crearUsuario(String usuario, String nombre, String password) {
+    public boolean crearUsuario(String usuario, String nombre, String password) {
 	boolean ok = false;
 
 	ok = UsuarioServicio.crearUsuario(new Usuario(usuario, nombre, password));

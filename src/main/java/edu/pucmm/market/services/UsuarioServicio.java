@@ -22,7 +22,7 @@ public class UsuarioServicio {
 
 	try {
 	    query = "SELECT * FROM USUARIO WHERE ID_USUARIO = ?";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setString(1, idUsuario);
@@ -59,7 +59,7 @@ public class UsuarioServicio {
 
 	try {
 	    query = "INSERT INTO USUARIO(ID_USUARIO, NOMBRE, PASSWORD) VALUES(?,?,?)";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setString(1, usuario.getUsuario());

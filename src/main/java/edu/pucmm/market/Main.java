@@ -2,6 +2,7 @@ package edu.pucmm.market;
 
 import java.sql.SQLException;
 
+import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.handlers.AdministrarControlador;
 import edu.pucmm.market.handlers.CarritoControlador;
 import edu.pucmm.market.handlers.CuentaControlador;
@@ -14,12 +15,16 @@ import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 public class Main {
 
-    private static Javalin app;
     private static DBServicio dbServicio;
+    private static Mercado mercado;
+    private static Javalin app;
 
     public static void main(String[] args) {
 
 	try {
+	    dbServicio = new DBServicio();
+	    mercado = new Mercado();
+	    
 	    app = Javalin.create(config -> {
 		config.addStaticFiles("/html");
 		config.addStaticFiles("/css");
@@ -28,16 +33,13 @@ public class Main {
 	    }).start(7000);
 
 	    registrarPlantilla();
-	    
-	    dbServicio = new DBServicio();
-	    dbServicio.borrarTablas();
-	    dbServicio.crearTablas();
-	    new SimularDatos();
 
-	    new Home(app).rutas();
-	    new CuentaControlador(app).rutas();
-	    new CarritoControlador(app).rutas();
-	    new AdministrarControlador(app).rutas();
+	    new SimularDatos(mercado);
+
+	    new Home(mercado, app).rutas();
+	    new CuentaControlador(mercado, app).rutas();
+	    new CarritoControlador(mercado, app).rutas();
+	    new AdministrarControlador(mercado, app).rutas();
 	} catch (SQLException e) {
 	    e.printStackTrace();
 	    try {

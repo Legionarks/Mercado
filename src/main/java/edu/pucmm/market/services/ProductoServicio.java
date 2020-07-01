@@ -29,7 +29,7 @@ public class ProductoServicio {
 	    } else {
 		query = "SELECT * FROM PRODUCTO_COMPRADO";
 	    }
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    resultSet = prepareStatement.executeQuery();
@@ -71,7 +71,7 @@ public class ProductoServicio {
 	    } else {
 		query = "SELECT * FROM PRODUCTO_COMPRADO WHERE ID_PRODUCTO = ?";
 	    }
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setInt(1, id);
@@ -105,16 +105,16 @@ public class ProductoServicio {
 	String query;
 
 	PreparedStatement prepareStatement;
-	
+
 	producto.setId(generarIdProducto(comprado));
 
 	try {
 	    if (!(comprado)) {
 		query = "INSERT INTO PRODUCTO(ID_PRODUCTO, NOMBRE, PRECIO) VALUES(?,?,?)";
 	    } else {
-		query = "INSERT INTO PRODUCTO_COMPRADO(ID_PRODUCTO, NOMBRE, PRECIO) VALUES(?,?,?)";		
+		query = "INSERT INTO PRODUCTO_COMPRADO(ID_PRODUCTO, NOMBRE, PRECIO) VALUES(?,?,?)";
 	    }
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setInt(1, producto.getId());
@@ -147,7 +147,7 @@ public class ProductoServicio {
 
 	try {
 	    query = "UPDATE PRODUCTO SET NOMBRE = ?, PRECIO = ? WHERE ID_PRODUCTO = ?";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setString(1, producto.getNombre());
@@ -180,7 +180,7 @@ public class ProductoServicio {
 
 	try {
 	    query = "DELETE FROM PRODUCTO WHERE ID_PRODUCTO = ?";
-	    connection = DBServicio.getConexion();
+	    // connection = DBServicio.getConexion();
 
 	    prepareStatement = connection.prepareStatement(query);
 	    prepareStatement.setInt(1, producto.getId());
@@ -199,7 +199,7 @@ public class ProductoServicio {
 
 	return ok;
     }
-    
+
     private static int generarIdProducto(boolean comprado) {
 	int id;
 

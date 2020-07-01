@@ -15,13 +15,13 @@ import io.javalin.Javalin;
 
 public class AdministrarControlador extends ServerHandler {
 
-    public AdministrarControlador(Javalin app) {
-	super(app);
+    public AdministrarControlador(Mercado mercado, Javalin app) {
+	super(mercado, app);
     }
 
     @Override
     public void rutas() {
-	app.routes(() -> {
+	getApp().routes(() -> {
 	    path("/administrar", () -> {
 		before(ctx -> {
 		    if ((Usuario) ctx.sessionAttribute("usuario") == null) {
@@ -32,7 +32,7 @@ public class AdministrarControlador extends ServerHandler {
 		get("/productos", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("productos", Mercado.getProductos());
+		    modelo.put("productos", getMercado().getProductos());
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
@@ -42,7 +42,7 @@ public class AdministrarControlador extends ServerHandler {
 		post("/producto/eliminar", ctx -> {
 		    int id = Integer.parseInt(ctx.formParam("id"));
 
-		    Mercado.eliminarProducto(id);
+		    getMercado().eliminarProducto(id);
 
 		    ctx.redirect("/administrar/productos");
 		});
@@ -62,7 +62,7 @@ public class AdministrarControlador extends ServerHandler {
 
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("producto", Mercado.buscarProducto(id));
+		    modelo.put("producto", getMercado().buscarProducto(id));
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
@@ -74,7 +74,7 @@ public class AdministrarControlador extends ServerHandler {
 		    String nombre = ctx.formParam("nombre");
 		    BigDecimal precio = BigDecimal.valueOf(Double.valueOf(ctx.formParam("precio")));
 
-		    Mercado.crearEditarProducto(id, nombre, precio);
+		    getMercado().crearEditarProducto(id, nombre, precio);
 
 		    ctx.redirect("/administrar/productos");
 		});
@@ -82,7 +82,7 @@ public class AdministrarControlador extends ServerHandler {
 		get("/info/ventas", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("ventas", Mercado.getVentasProductos());
+		    modelo.put("ventas", getMercado().getVentasProductos());
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 

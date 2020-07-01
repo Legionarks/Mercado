@@ -11,13 +11,13 @@ import io.javalin.Javalin;
 
 public class CuentaControlador extends ServerHandler {
 
-    public CuentaControlador(Javalin app) {
-	super(app);
+    public CuentaControlador(Mercado mercado, Javalin app) {
+	super(mercado, app);
     }
 
     @Override
     public void rutas() {
-	app.routes(() -> {
+	getApp().routes(() -> {
 	    path("/cuenta", () -> {
 		get("/logear", ctx -> {
 		    if ((Usuario) ctx.sessionAttribute("usuario") != null) {
@@ -35,7 +35,7 @@ public class CuentaControlador extends ServerHandler {
 		    Usuario usuario;
 		    String encryptedPassword = new StrongPasswordEncryptor().encryptPassword(password);
 
-		    usuario = Mercado.autenticarUsuario(idUsuario, password, false);
+		    usuario = getMercado().autenticarUsuario(idUsuario, password, false);
 
 		    if (usuario != null) {
 			ctx.sessionAttribute("usuario", usuario);

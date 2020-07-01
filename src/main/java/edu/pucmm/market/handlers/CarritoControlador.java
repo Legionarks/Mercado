@@ -12,13 +12,13 @@ import io.javalin.Javalin;
 
 public class CarritoControlador extends ServerHandler {
 
-    public CarritoControlador(Javalin app) {
-	super(app);
+    public CarritoControlador(Mercado mercado, Javalin app) {
+	super(mercado, app);
     }
 
     @Override
     public void rutas() {
-	app.routes(() -> {
+	getApp().routes(() -> {
 	    path("/carrito", () -> {
 		get(ctx -> {
 		    CarroCompra carrito = ctx.sessionAttribute("carrito");
@@ -37,7 +37,7 @@ public class CarritoControlador extends ServerHandler {
 		    int producto = Integer.parseInt(ctx.formParam("id"));
 		    int cantidad = Integer.parseInt(ctx.formParam("cantidad"));
 
-		    ((CarroCompra) ctx.sessionAttribute("carrito")).agregarProducto(Mercado.buscarProducto(producto),
+		    ((CarroCompra) ctx.sessionAttribute("carrito")).agregarProducto(getMercado().buscarProducto(producto),
 			    cantidad);
 
 		    ctx.redirect("/");
@@ -46,7 +46,7 @@ public class CarritoControlador extends ServerHandler {
 		post("/producto/eliminar", ctx -> {
 		    int producto = Integer.parseInt(ctx.formParam("id"));
 
-		    ((CarroCompra) ctx.sessionAttribute("carrito")).eliminarProducto(Mercado.buscarProducto(producto));
+		    ((CarroCompra) ctx.sessionAttribute("carrito")).eliminarProducto(getMercado().buscarProducto(producto));
 
 		    ctx.redirect("/carrito");
 		});
@@ -60,7 +60,7 @@ public class CarritoControlador extends ServerHandler {
 		post("/comprar", ctx -> {
 		    String cliente = ctx.formParam("cliente");
 
-		    Mercado.procesarCompra(cliente, ctx.sessionAttribute("carrito"));
+		    getMercado().procesarCompra(cliente, ctx.sessionAttribute("carrito"));
 
 		    ctx.redirect("/carrito");
 		});
