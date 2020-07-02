@@ -29,20 +29,20 @@ public class CuentaControlador extends ServerHandler {
 
 		post("/logear", ctx -> {
 		    String idUsuario = ctx.formParam("usuario");
-		    String password = ctx.formParam("password");
+		    String contraseña = ctx.formParam("contraseña");
 		    boolean recordarme = ctx.formParam("recordarme") != null;
 
 		    Usuario usuario;
-		    String encryptedPassword = new StrongPasswordEncryptor().encryptPassword(password);
+		    String contraseñaEncriptada = new StrongPasswordEncryptor().encryptPassword(contraseña);
 
-		    usuario = getMercado().autenticarUsuario(idUsuario, password, false);
+		    usuario = getMercado().autenticarUsuario(idUsuario, contraseña, false);
 
 		    if (usuario != null) {
 			ctx.sessionAttribute("usuario", usuario);
 
 			if (recordarme) {
 			    ctx.cookie("usuario", usuario.getUsuario(), 604800);
-			    ctx.cookie("password", encryptedPassword, 604800);
+			    ctx.cookie("contraseña", contraseñaEncriptada, 604800);
 			}
 
 			ctx.redirect("/");
@@ -54,7 +54,7 @@ public class CuentaControlador extends ServerHandler {
 		get("/desloguear", ctx -> {
 		    ctx.sessionAttribute("usuario", null);
 		    ctx.cookie("usuario", "", 0);
-		    ctx.cookie("password", "", 0);
+		    ctx.cookie("contraseña", "", 0);
 		    ctx.redirect("/");
 		});
 		

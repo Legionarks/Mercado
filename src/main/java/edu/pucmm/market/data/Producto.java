@@ -2,10 +2,20 @@ package edu.pucmm.market.data;
 
 import java.math.BigDecimal;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "PRODUCTO")
 public class Producto {
 
+    @Id
     private int id;
+    @Column(name = "Nombre")
     private String nombre;
+    @Column(name = "Precio")
     private BigDecimal precio;
 
     public Producto(int id, String nombre, BigDecimal precio) {

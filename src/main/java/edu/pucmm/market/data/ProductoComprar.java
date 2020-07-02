@@ -1,11 +1,21 @@
 package edu.pucmm.market.data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 
-public class ProductoComprar {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "PRODUCTO_COMPRA")
+public class ProductoComprar implements Serializable {
+
+    @Id
     private Producto producto;
+    @Column(name = "Cantidad")
     private int cantidad;
 
     public ProductoComprar(Producto producto, int cantidad) {

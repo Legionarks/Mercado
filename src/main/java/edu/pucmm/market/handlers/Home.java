@@ -38,16 +38,16 @@ public class Home extends ServerHandler {
 	getApp().before(ctx -> {
 	    Usuario usuario = ctx.sessionAttribute("usuario");
 	    String idUsuario;
-	    String encryptedPassword;
+	    String contraseñaEncriptada;
 	    CarroCompra carrito = ctx.sessionAttribute("carrito");
 
 	    if (usuario == null) {
 		idUsuario = ctx.cookie("usuario");
-		encryptedPassword = ctx.cookie("password");
+		contraseñaEncriptada = ctx.cookie("contraseña");
 
-		if (idUsuario != null && encryptedPassword != null) {
-		    if (!((idUsuario + encryptedPassword).isBlank() || (idUsuario + encryptedPassword).isEmpty())) {
-			usuario = getMercado().autenticarUsuario(idUsuario, encryptedPassword, true);
+		if (idUsuario != null && contraseñaEncriptada != null) {
+		    if (!((idUsuario + contraseñaEncriptada).isBlank() || (idUsuario + contraseñaEncriptada).isEmpty())) {
+			usuario = getMercado().autenticarUsuario(idUsuario, contraseñaEncriptada, true);
 
 			if (usuario != null) {
 			    ctx.sessionAttribute("usuario", usuario);

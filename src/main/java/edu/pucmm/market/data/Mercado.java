@@ -10,16 +10,23 @@ import edu.pucmm.market.services.UsuarioServicio;
 import edu.pucmm.market.services.VentaServicio;
 
 public class Mercado {
+    
+    private final UsuarioServicio usuarioServicio;
+    private final ProductoServicio productoServicio;
+    private final VentaServicio ventaServicio;
 
     public Mercado() {
+	this.usuarioServicio = new UsuarioServicio();
+	this.productoServicio = new ProductoServicio();
+	this.ventaServicio = new VentaServicio();
     }
 
     public List<VentasProductos> getVentasProductos() {
-	return VentaServicio.getVentas();
+	return this.ventaServicio.getVentas();
     }
 
     public List<Producto> getProductos() {
-	return ProductoServicio.getProductos(false);
+	return productoServicio.getProductos(false);
     }
 
     public boolean eliminarProducto(int id) {
@@ -27,14 +34,14 @@ public class Mercado {
 	Producto auxProducto = buscarProducto(id);
 
 	if (auxProducto != null) {
-	    ok = ProductoServicio.eliminarProducto(auxProducto);
+	    ok = this.productoServicio.eliminarProducto(auxProducto);
 	}
 
 	return ok;
     }
 
     public Producto buscarProducto(int id) {
-	return ProductoServicio.buscarProducto(id, false);
+	return this.productoServicio.buscarProducto(id, false);
     }
 
     public boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
@@ -43,27 +50,27 @@ public class Mercado {
 
 	if (id == -1 || auxProducto == null) {
 	    auxProducto = new Producto(1, nombre, precio);
-	    ok = ProductoServicio.crearProducto(auxProducto, false);
+	    ok = this.productoServicio.crearProducto(auxProducto, false);
 	} else {
 	    auxProducto.setNombre(nombre);
 	    auxProducto.setPrecio(precio);
-	    ok = ProductoServicio.editarProducto(auxProducto);
+	    ok = this.productoServicio.editarProducto(auxProducto);
 	}
 
 	return ok;
     }
 
-    public Usuario autenticarUsuario(String idUsuario, String password, boolean encrypted) {
-	Usuario usuario = UsuarioServicio.autenticarUsuario(idUsuario);
-	StrongPasswordEncryptor passwordEncryptor;
-	String encryptedPassword;
+    public Usuario autenticarUsuario(String idUsuario, String contraseña, boolean encriptado) {
+	Usuario usuario = this.usuarioServicio.buscarUsuario(idUsuario);
+	StrongPasswordEncryptor encriptador;
+	String contraseñaEncriptada;
 
 	if (usuario != null) {
-	    passwordEncryptor = new StrongPasswordEncryptor();
-	    encryptedPassword = passwordEncryptor.encryptPassword(usuario.getPassword());
+	    encriptador = new StrongPasswordEncryptor();
+	    contraseñaEncriptada = encriptador.encryptPassword(usuario.getContraseña());
 	    
-	    if (encrypted ? passwordEncryptor.checkPassword(usuario.getPassword(), password)
-		    : passwordEncryptor.checkPassword(password, encryptedPassword)) {
+	    if (encriptado ? encriptador.checkPassword(usuario.getContraseña(), contraseña)
+		    : encriptador.checkPassword(contraseña, contraseñaEncriptada)) {
 		return usuario;
 	    } else {
 		usuario = null;
@@ -79,7 +86,7 @@ public class Mercado {
 
 	if (!(carrito.getListaProductos().isEmpty())) {
 	    ventasProductos = new VentasProductos(1, cliente, carrito.getListaProductos());
-	    ok = VentaServicio.crearVenta(ventasProductos);
+	    ok = this.ventaServicio.crearVenta(ventasProductos);
 	    carrito.limpiarCarrito();
 	}
 
@@ -87,13 +94,13 @@ public class Mercado {
     }
 
     public VentasProductos buscarVenta(long id) {
-	return VentaServicio.buscarVenta(id);
+	return this.ventaServicio.buscarVenta(id);
     }
 
     public boolean crearUsuario(String usuario, String nombre, String password) {
 	boolean ok = false;
 
-	ok = UsuarioServicio.crearUsuario(new Usuario(usuario, nombre, password));
+	ok = this.usuarioServicio.crearUsuario(new Usuario(usuario, nombre, password));
 
 	return ok;
     }

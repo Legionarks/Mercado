@@ -1,8 +1,8 @@
 package edu.pucmm.market.utils;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
@@ -44,7 +44,7 @@ public class SimularDatos {
 
     private void ventasDefecto() {
 	CarroCompra carro = new CarroCompra(1);
-	List<ProductoComprar> lista = new ArrayList<ProductoComprar>();
+	Set<ProductoComprar> lista = new HashSet<ProductoComprar>();
 	carro.setListaProductos(lista);
 	lista.add(new ProductoComprar(this.mercado.getProductos().get(1), 5));
 	lista.add(new ProductoComprar(this.mercado.getProductos().get(3), 11));
@@ -52,13 +52,13 @@ public class SimularDatos {
 	this.mercado.procesarCompra("Jorge", carro);
 
 	CarroCompra carroBibi = new CarroCompra(2);
-	List<ProductoComprar> listaBibi = new ArrayList<ProductoComprar>();
+	Set<ProductoComprar> listaBibi = new HashSet<ProductoComprar>();
 	carroBibi.setListaProductos(listaBibi);
 	listaBibi.add(new ProductoComprar(this.mercado.getProductos().get(1), 4));
 	this.mercado.procesarCompra("Bibi", carroBibi);
 	
 	CarroCompra carroJohn = new CarroCompra(3);
-	List<ProductoComprar> listaJohn = new ArrayList<ProductoComprar>();
+	Set<ProductoComprar> listaJohn = new HashSet<ProductoComprar>();
 	carroJohn.setListaProductos(listaJohn);
 	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(1), 5));
 	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(2), 9));

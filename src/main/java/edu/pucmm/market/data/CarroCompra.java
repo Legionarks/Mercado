@@ -2,17 +2,17 @@ package edu.pucmm.market.data;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class CarroCompra {
 
     private long id;
-    private List<ProductoComprar> listaProductos;
+    private Set<ProductoComprar> listaProductos;
 
     public CarroCompra(long id) {
 	this.id = (long) Math.random() + Long.MAX_VALUE;
-	this.listaProductos = new ArrayList<ProductoComprar>();
+	this.listaProductos = new HashSet<ProductoComprar>();
     }
 
     public long getId() {
@@ -23,11 +23,11 @@ public class CarroCompra {
 	this.id = id;
     }
 
-    public List<ProductoComprar> getListaProductos() {
+    public Set<ProductoComprar> getListaProductos() {
 	return listaProductos;
     }
     
-    public void setListaProductos(List<ProductoComprar> listaProductos) {
+    public void setListaProductos(Set<ProductoComprar> listaProductos) {
 	this.listaProductos = listaProductos;
     }
 
@@ -62,7 +62,7 @@ public class CarroCompra {
     }
 
     public void limpiarCarrito() {
-	this.listaProductos = new ArrayList<ProductoComprar>();
+	this.listaProductos = new HashSet<ProductoComprar>();
     }
 
     public void eliminarProducto(Producto producto) {

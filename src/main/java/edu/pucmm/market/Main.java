@@ -24,12 +24,13 @@ public class Main {
 	try {
 	    dbServicio = new DBServicio();
 	    mercado = new Mercado();
-	    
+
 	    app = Javalin.create(config -> {
 		config.addStaticFiles("/html");
 		config.addStaticFiles("/css");
 		config.addStaticFiles("/templates");
 		config.addStaticFiles("/images");
+		config.enableCorsForAllOrigins();
 	    }).start(7000);
 
 	    registrarPlantilla();

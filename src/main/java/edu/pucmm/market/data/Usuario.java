@@ -1,15 +1,27 @@
 package edu.pucmm.market.data;
 
-public class Usuario {
+import java.io.Serializable;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "USUARIO")
+public class Usuario implements Serializable {
+
+    @Id
     private String usuario;
+    @Column(name = "Nombre")
     private String nombre;
-    private String password;
+    @Column(name = "Contraseña")
+    private String contraseña;
 
-    public Usuario(String usuario, String nombre, String password) {
+    public Usuario(String usuario, String nombre, String contraseña) {
 	this.usuario = usuario;
 	this.nombre = nombre;
-	this.password = password;
+	this.contraseña = contraseña;
     }
 
     public Usuario() {
@@ -31,11 +43,11 @@ public class Usuario {
 	this.nombre = nombre;
     }
 
-    public String getPassword() {
-	return password;
+    public String getContraseña() {
+	return contraseña;
     }
 
-    public void setPassword(String password) {
-	this.password = password;
+    public void setContraseña(String contraseña) {
+	this.contraseña = contraseña;
     }
 }

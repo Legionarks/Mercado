@@ -1,18 +1,34 @@
 package edu.pucmm.market.data;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.Date;
-import java.util.List;
+import java.util.Set;
 
-public class VentasProductos {
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
+@Entity
+@Table(name = "VENTA")
+public class VentasProductos implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "Fecha_Compra")
     private Date fechaCompra;
+    @Column(name = "Nombre_Cliente")
     private String nombreCliente;
-    private List<ProductoComprar> listaProductos;
+    @OneToMany
+    private Set<ProductoComprar> listaProductos;
 
-    public VentasProductos(long id, String nombreCliente, List<ProductoComprar> listaProductos) {
+    public VentasProductos(long id, String nombreCliente, Set<ProductoComprar> listaProductos) {
 	this.id = id;
 	this.fechaCompra = new Date(System.currentTimeMillis());
 	this.nombreCliente = nombreCliente;
@@ -46,11 +62,11 @@ public class VentasProductos {
 	this.nombreCliente = nombreCliente;
     }
 
-    public List<ProductoComprar> getListaProductos() {
+    public Set<ProductoComprar> getListaProductos() {
 	return listaProductos;
     }
 
-    public void setListaProductos(List<ProductoComprar> listaProductos) {
+    public void setListaProductos(Set<ProductoComprar> listaProductos) {
 	this.listaProductos = listaProductos;
     }
 
