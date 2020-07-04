@@ -8,7 +8,6 @@ import java.util.Map;
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Usuario;
-import edu.pucmm.market.utils.ServerHandler;
 import io.javalin.Javalin;
 
 public class Home extends ServerHandler {
@@ -43,7 +42,7 @@ public class Home extends ServerHandler {
 
 	    if (usuario == null) {
 		idUsuario = ctx.cookie("usuario");
-		contraseñaEncriptada = ctx.cookie("contraseña");
+		contraseñaEncriptada = ctx.cookie("contrasena");
 
 		if (idUsuario != null && contraseñaEncriptada != null) {
 		    if (!((idUsuario + contraseñaEncriptada).isBlank() || (idUsuario + contraseñaEncriptada).isEmpty())) {
@@ -57,7 +56,7 @@ public class Home extends ServerHandler {
 	    }
 
 	    if (carrito == null) {
-		carrito = new CarroCompra(1);
+		carrito = new CarroCompra();
 		ctx.sessionAttribute("carrito", carrito);
 	    }
 	});

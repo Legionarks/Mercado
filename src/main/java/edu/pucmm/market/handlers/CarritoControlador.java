@@ -7,7 +7,6 @@ import java.util.Map;
 
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
-import edu.pucmm.market.utils.ServerHandler;
 import io.javalin.Javalin;
 
 public class CarritoControlador extends ServerHandler {
@@ -37,8 +36,7 @@ public class CarritoControlador extends ServerHandler {
 		    int producto = Integer.parseInt(ctx.formParam("id"));
 		    int cantidad = Integer.parseInt(ctx.formParam("cantidad"));
 
-		    ((CarroCompra) ctx.sessionAttribute("carrito")).agregarProducto(getMercado().buscarProducto(producto),
-			    cantidad);
+		    //((CarroCompra) ctx.sessionAttribute("carrito")).agregarProducto(getMercado().buscarProducto(producto), cantidad);
 
 		    ctx.redirect("/");
 		});

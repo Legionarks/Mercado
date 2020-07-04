@@ -8,11 +8,11 @@ import java.util.Set;
 public class CarroCompra {
 
     private long id;
-    private Set<ProductoComprar> listaProductos;
+    private Set<ProductoCarro> carro;
 
-    public CarroCompra(long id) {
+    public CarroCompra() {
 	this.id = (long) Math.random() + Long.MAX_VALUE;
-	this.listaProductos = new HashSet<ProductoComprar>();
+	this.carro = new HashSet<ProductoCarro>();
     }
 
     public long getId() {
@@ -23,38 +23,38 @@ public class CarroCompra {
 	this.id = id;
     }
 
-    public Set<ProductoComprar> getListaProductos() {
-	return listaProductos;
+    public Set<ProductoCarro> getCarro() {
+	return carro;
     }
-    
-    public void setListaProductos(Set<ProductoComprar> listaProductos) {
-	this.listaProductos = listaProductos;
+
+    public void setCarro(Set<ProductoCarro> carro) {
+	this.carro = carro;
     }
 
     public BigDecimal calcularTotal() {
 	BigDecimal total = new BigDecimal(0);
 
-	for (ProductoComprar compra : this.listaProductos) {
-	    total = total.add(new BigDecimal(compra.getCantidad() * compra.getProducto().getPrecio().doubleValue()));
+	for (ProductoCarro auxCarro : this.carro) {
+	    total = total.add(new BigDecimal(auxCarro.getCantidad() * auxCarro.getExistencia().getPrecio().doubleValue()));
 	}
 
 	return total.setScale(2, RoundingMode.CEILING);
     }
 
-    public void agregarProducto(Producto producto, int cantidad) {
-	ProductoComprar compra = this.buscarProducto(producto.getId());
+    public void agregarProducto(ProductoExistencia existencia, int cantidad) {
+	ProductoCarro auxCarro = this.buscarProducto(existencia.getProducto());
 
-	if (compra != null) {
-	    compra.setCantidad(compra.getCantidad() + cantidad);
+	if (auxCarro != null) {
+	    auxCarro.setCantidad(auxCarro.getCantidad() + cantidad);
 	} else {
-	    this.listaProductos.add(new ProductoComprar(producto, cantidad));
+	    this.carro.add(new ProductoCarro(existencia , cantidad));
 	}
     }
 
-    private ProductoComprar buscarProducto(int id) {
-	for (ProductoComprar compra : listaProductos) {
-	    if (compra.getProducto().getId() == id) {
-		return compra;
+    private ProductoCarro buscarProducto(Producto producto) {
+	for (ProductoCarro auxCarro : this.carro) {
+	    if (auxCarro.getExistencia().getProducto().equals(producto)) {
+		return auxCarro;
 	    }
 	}
 
@@ -62,18 +62,18 @@ public class CarroCompra {
     }
 
     public void limpiarCarrito() {
-	this.listaProductos = new HashSet<ProductoComprar>();
+	this.carro = new HashSet<ProductoCarro>();
     }
 
     public void eliminarProducto(Producto producto) {
-	this.listaProductos.remove(this.buscarProducto(producto.getId()));
+	this.carro.remove(this.buscarProducto(producto));
     }
 
     public int cantidadProductos() {
 	int cantidad = 0;
 
-	for (ProductoComprar productoComprar : this.listaProductos) {
-	    cantidad += productoComprar.getCantidad();
+	for (ProductoCarro producto : this.carro) {
+	    cantidad += producto.getCantidad();
 	}
 
 	return cantidad;

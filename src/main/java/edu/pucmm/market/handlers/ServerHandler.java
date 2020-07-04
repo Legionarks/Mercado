@@ -1,4 +1,4 @@
-package edu.pucmm.market.utils;
+package edu.pucmm.market.handlers;
 
 import edu.pucmm.market.data.Mercado;
 import io.javalin.Javalin;

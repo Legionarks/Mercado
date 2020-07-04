@@ -21,7 +21,7 @@ public class DBServicio {
     
     public void iniciarDB() throws SQLException {
 	tcpServer = Server.createTcpServer("-tcpPort", "9092", "-tcpAllowOthers", "-tcpDaemon", "-ifNotExists").start();
-        webServer = Server.createWebServer("-trace", "-webPort", "0").start();
+        webServer = Server.createWebServer("-webPort", "9090", "-webAllowOthers", "-webDaemon").start();
     }
 
     public void pararDB() throws SQLException {

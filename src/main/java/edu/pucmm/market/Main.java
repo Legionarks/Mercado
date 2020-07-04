@@ -10,8 +10,6 @@ import edu.pucmm.market.handlers.Home;
 import edu.pucmm.market.services.DBServicio;
 import edu.pucmm.market.utils.SimularDatos;
 import io.javalin.Javalin;
-import io.javalin.plugin.rendering.JavalinRenderer;
-import io.javalin.plugin.rendering.template.JavalinThymeleaf;
 
 public class Main {
 
@@ -33,8 +31,6 @@ public class Main {
 		config.enableCorsForAllOrigins();
 	    }).start(7000);
 
-	    registrarPlantilla();
-
 	    new SimularDatos(mercado);
 
 	    new Home(mercado, app).rutas();
@@ -45,13 +41,10 @@ public class Main {
 	    e.printStackTrace();
 	    try {
 		dbServicio.pararDB();
+		app.stop();
 	    } catch (SQLException ex) {
 		ex.printStackTrace();
 	    }
 	}
-    }
-
-    private static void registrarPlantilla() {
-	JavalinRenderer.register(JavalinThymeleaf.INSTANCE, ".html");
     }
 }

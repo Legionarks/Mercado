@@ -6,7 +6,6 @@ import org.jasypt.util.password.StrongPasswordEncryptor;
 
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Usuario;
-import edu.pucmm.market.utils.ServerHandler;
 import io.javalin.Javalin;
 
 public class CuentaControlador extends ServerHandler {
@@ -31,6 +30,8 @@ public class CuentaControlador extends ServerHandler {
 		    String idUsuario = ctx.formParam("usuario");
 		    String contraseña = ctx.formParam("contraseña");
 		    boolean recordarme = ctx.formParam("recordarme") != null;
+		    
+		    System.out.println(contraseña);
 
 		    Usuario usuario;
 		    String contraseñaEncriptada = new StrongPasswordEncryptor().encryptPassword(contraseña);
@@ -42,7 +43,7 @@ public class CuentaControlador extends ServerHandler {
 
 			if (recordarme) {
 			    ctx.cookie("usuario", usuario.getUsuario(), 604800);
-			    ctx.cookie("contraseña", contraseñaEncriptada, 604800);
+			    ctx.cookie("contrasena", contraseñaEncriptada, 604800);
 			}
 
 			ctx.redirect("/");
@@ -54,7 +55,7 @@ public class CuentaControlador extends ServerHandler {
 		get("/desloguear", ctx -> {
 		    ctx.sessionAttribute("usuario", null);
 		    ctx.cookie("usuario", "", 0);
-		    ctx.cookie("contraseña", "", 0);
+		    ctx.cookie("contrasena", "", 0);
 		    ctx.redirect("/");
 		});
 		

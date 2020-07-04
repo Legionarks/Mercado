@@ -1,12 +1,9 @@
 package edu.pucmm.market.utils;
 
 import java.math.BigDecimal;
-import java.util.HashSet;
-import java.util.Set;
 
 import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
-import edu.pucmm.market.data.ProductoComprar;
 
 public class SimularDatos {
     
@@ -39,32 +36,29 @@ public class SimularDatos {
 	this.mercado.crearEditarProducto(4, "Paquete de pan", BigDecimal.valueOf(80.20));
 	this.mercado.crearEditarProducto(5, "Queso", BigDecimal.valueOf(90.15));
 	this.mercado.crearEditarProducto(6, "Manzana", BigDecimal.valueOf(15.15));
-	this.mercado.crearEditarProducto(7, "Piña", BigDecimal.valueOf(45.00));
+	this.mercado.crearEditarProducto(7, "Piña", BigDecimal.valueOf(45.00));	
     }
 
     private void ventasDefecto() {
-	CarroCompra carro = new CarroCompra(1);
-	Set<ProductoComprar> lista = new HashSet<ProductoComprar>();
-	carro.setListaProductos(lista);
-	lista.add(new ProductoComprar(this.mercado.getProductos().get(1), 5));
-	lista.add(new ProductoComprar(this.mercado.getProductos().get(3), 11));
-	lista.add(new ProductoComprar(this.mercado.getProductos().get(5), 3));
-	this.mercado.procesarCompra("Jorge", carro);
-
-	CarroCompra carroBibi = new CarroCompra(2);
-	Set<ProductoComprar> listaBibi = new HashSet<ProductoComprar>();
-	carroBibi.setListaProductos(listaBibi);
-	listaBibi.add(new ProductoComprar(this.mercado.getProductos().get(1), 4));
-	this.mercado.procesarCompra("Bibi", carroBibi);
+	CarroCompra carro;
 	
-	CarroCompra carroJohn = new CarroCompra(3);
-	Set<ProductoComprar> listaJohn = new HashSet<ProductoComprar>();
-	carroJohn.setListaProductos(listaJohn);
-	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(1), 5));
-	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(2), 9));
-	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(3), 3));
-	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(4), 1));
-	listaJohn.add(new ProductoComprar(this.mercado.getProductos().get(5), 8));
-	this.mercado.procesarCompra("John", carroJohn);
+	carro = new CarroCompra();
+	carro.agregarProducto(this.mercado.getExistencias().get(0), 5);
+	carro.agregarProducto(this.mercado.getExistencias().get(3), 1);
+	carro.agregarProducto(this.mercado.getExistencias().get(5), 7);
+	this.mercado.procesarCompra("Jorge", carro);
+	
+	carro = new CarroCompra();
+	carro.agregarProducto(this.mercado.getExistencias().get(2), 5);
+	this.mercado.procesarCompra("Bibi", carro);
+	
+	carro = new CarroCompra();
+	carro.agregarProducto(this.mercado.getExistencias().get(0), 5);
+	carro.agregarProducto(this.mercado.getExistencias().get(5), 2);
+	carro.agregarProducto(this.mercado.getExistencias().get(4), 7);
+	carro.agregarProducto(this.mercado.getExistencias().get(2), 14);
+	carro.agregarProducto(this.mercado.getExistencias().get(1), 61);
+	carro.agregarProducto(this.mercado.getExistencias().get(3), 1);
+	this.mercado.procesarCompra("John", carro);
     }
 }

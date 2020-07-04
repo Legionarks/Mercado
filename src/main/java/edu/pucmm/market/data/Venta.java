@@ -6,36 +6,42 @@ import java.math.RoundingMode;
 import java.util.Date;
 import java.util.Set;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
 @Table(name = "VENTA")
-public class VentasProductos implements Serializable {
+public class Venta implements Serializable {
 
+    /**
+     * 
+     */
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "ID_Venta")
     private long id;
     @Column(name = "Fecha_Compra")
     private Date fechaCompra;
     @Column(name = "Nombre_Cliente")
     private String nombreCliente;
-    @OneToMany
-    private Set<ProductoComprar> listaProductos;
+    @ElementCollection
+    @CollectionTable(name = "VENTA_DETALLE")
+    private Set<VentaDetalle> ventaDetalles;
 
-    public VentasProductos(long id, String nombreCliente, Set<ProductoComprar> listaProductos) {
-	this.id = id;
+    public Venta(String nombreCliente, Set<VentaDetalle> ventaDetalles) {
 	this.fechaCompra = new Date(System.currentTimeMillis());
 	this.nombreCliente = nombreCliente;
-	this.listaProductos = listaProductos;
+	this.ventaDetalles = ventaDetalles;
     }
 
-    public VentasProductos() {
+    public Venta() {
     }
 
     public long getId() {
@@ -62,19 +68,19 @@ public class VentasProductos implements Serializable {
 	this.nombreCliente = nombreCliente;
     }
 
-    public Set<ProductoComprar> getListaProductos() {
-	return listaProductos;
+    public Set<VentaDetalle> getVentaDetalles() {
+	return ventaDetalles;
     }
 
-    public void setListaProductos(Set<ProductoComprar> listaProductos) {
-	this.listaProductos = listaProductos;
+    public void setVentaDetalles(Set<VentaDetalle> ventaDetalles) {
+	this.ventaDetalles = ventaDetalles;
     }
 
     public BigDecimal calcularTotal() {
 	BigDecimal total = new BigDecimal(0);
 
-	for (ProductoComprar compra : this.listaProductos) {
-	    total = total.add(new BigDecimal(compra.getCantidad() * compra.getProducto().getPrecio().doubleValue()));
+	for (VentaDetalle detalle : this.ventaDetalles) {
+	    total = total.add(new BigDecimal(detalle.getCantidad() * detalle.getPrecio().doubleValue()));
 	}
 
 	return total.setScale(2, RoundingMode.CEILING);

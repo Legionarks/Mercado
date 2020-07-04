@@ -10,7 +10,6 @@ import edu.pucmm.market.data.CarroCompra;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Producto;
 import edu.pucmm.market.data.Usuario;
-import edu.pucmm.market.utils.ServerHandler;
 import io.javalin.Javalin;
 
 public class AdministrarControlador extends ServerHandler {
@@ -42,7 +41,7 @@ public class AdministrarControlador extends ServerHandler {
 		post("/producto/eliminar", ctx -> {
 		    int id = Integer.parseInt(ctx.formParam("id"));
 
-		    getMercado().eliminarProducto(id);
+		    getMercado().quitar(getMercado().buscarProducto(id));
 
 		    ctx.redirect("/administrar/productos");
 		});
@@ -50,7 +49,7 @@ public class AdministrarControlador extends ServerHandler {
 		get("/producto/crear", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("producto", new Producto(-1, "", BigDecimal.valueOf(0.00)));
+		    modelo.put("producto", new Producto(""));
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
@@ -82,7 +81,7 @@ public class AdministrarControlador extends ServerHandler {
 		get("/info/ventas", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("ventas", getMercado().getVentasProductos());
+		    modelo.put("ventas", getMercado().getVentas());
 		    modelo.put("carrito_cantidad",
 			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
