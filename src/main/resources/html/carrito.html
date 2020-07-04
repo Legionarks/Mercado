@@ -8,7 +8,7 @@
 	<main class="main">
 		<div
 			th:replace="/templates/plantilla.html :: titulo(texto='Carrito de Compra')"></div>
-			
+
 		<div class="container">
 			<form id="carrito" action="/carrito/comprar" method="post">
 				<h5>Datos del Cliente</h5>
@@ -28,17 +28,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="compra : ${carrito.listaProductos}">
+					<th:block th:each="compra : ${carrito.productos}">
 						<tr>
-							<td th:text="${compra.producto.nombre}"></td>
-							<td th:text="${compra.producto.precio}"></td>
+							<td th:text="${compra.existencia.producto.nombre}"></td>
+							<td th:text="${compra.existencia.precio}"></td>
 							<td th:text="${compra.cantidad}"></td>
 							<td th:text="${compra.calcularTotal}"></td>
 							<td>
-								<form th:id="${compra.producto.id}"
+								<form th:id="${compra.existencia.producto.id}"
 									action="/carrito/producto/eliminar" method="post">
-									<input type="hidden" name="id" th:value="${compra.producto.id}">
-									<button type="submit" th:form="${compra.producto.id}"
+									<input type="hidden" name="id"
+										th:value="${compra.existencia.producto.id}">
+									<button type="submit"
+										th:form="${compra.existencia.producto.id}"
 										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
 								</form>
 							</td>
@@ -47,7 +49,7 @@
 				</tbody>
 				<tfoot class="text-right table-active font-weight-bold">
 					<tr>
-						<td th:text="'Total: ' + ${total}" colspan="5"></td>
+						<td th:text="'Total: ' + ${carrito.calcularTotal}" colspan="5"></td>
 					</tr>
 				</tfoot>
 			</table>

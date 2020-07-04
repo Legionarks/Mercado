@@ -5,7 +5,7 @@ import static io.javalin.apibuilder.ApiBuilder.*;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.pucmm.market.data.CarroCompra;
+import edu.pucmm.market.data.Carro;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Usuario;
 import io.javalin.Javalin;
@@ -25,9 +25,9 @@ public class Home extends ServerHandler {
 		get(ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("productos", getMercado().getProductos());
+		    modelo.put("existencias", getMercado().getExistencias());
 		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/index.html", modelo);
 		});
@@ -38,7 +38,7 @@ public class Home extends ServerHandler {
 	    Usuario usuario = ctx.sessionAttribute("usuario");
 	    String idUsuario;
 	    String contraseñaEncriptada;
-	    CarroCompra carrito = ctx.sessionAttribute("carrito");
+	    Carro carrito = ctx.sessionAttribute("carrito");
 
 	    if (usuario == null) {
 		idUsuario = ctx.cookie("usuario");
@@ -56,7 +56,7 @@ public class Home extends ServerHandler {
 	    }
 
 	    if (carrito == null) {
-		carrito = new CarroCompra();
+		carrito = new Carro();
 		ctx.sessionAttribute("carrito", carrito);
 	    }
 	});

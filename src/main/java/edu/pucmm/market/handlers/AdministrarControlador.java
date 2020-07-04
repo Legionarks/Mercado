@@ -6,9 +6,10 @@ import java.math.BigDecimal;
 import java.util.HashMap;
 import java.util.Map;
 
-import edu.pucmm.market.data.CarroCompra;
+import edu.pucmm.market.data.Carro;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Producto;
+import edu.pucmm.market.data.ProductoExistencia;
 import edu.pucmm.market.data.Usuario;
 import io.javalin.Javalin;
 
@@ -31,9 +32,9 @@ public class AdministrarControlador extends ServerHandler {
 		get("/productos", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("productos", getMercado().getProductos());
+		    modelo.put("existencias", getMercado().getExistencias());
 		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/crud.html", modelo);
 		});
@@ -49,9 +50,9 @@ public class AdministrarControlador extends ServerHandler {
 		get("/producto/crear", ctx -> {
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("producto", new Producto(""));
+		    modelo.put("existencia", new ProductoExistencia(new Producto(), new BigDecimal(0)));
 		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/crear-editar.html", modelo);
 		});
@@ -61,9 +62,9 @@ public class AdministrarControlador extends ServerHandler {
 
 		    Map<String, Object> modelo = new HashMap<String, Object>();
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("producto", getMercado().buscarProducto(id));
+		    modelo.put("existencia", getMercado().buscarExistencia(id));
 		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/crear-editar.html", modelo);
 		});
@@ -83,7 +84,7 @@ public class AdministrarControlador extends ServerHandler {
 		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
 		    modelo.put("ventas", getMercado().getVentas());
 		    modelo.put("carrito_cantidad",
-			    (((CarroCompra) ctx.sessionAttribute("carrito")).cantidadProductos()));
+			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
 		    ctx.render("/html/ventas.html", modelo);
 		});

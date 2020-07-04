@@ -2,6 +2,8 @@ package edu.pucmm.market;
 
 import java.sql.SQLException;
 
+import org.jasypt.util.text.AES256TextEncryptor;
+
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.handlers.AdministrarControlador;
 import edu.pucmm.market.handlers.CarritoControlador;
@@ -12,7 +14,10 @@ import edu.pucmm.market.utils.SimularDatos;
 import io.javalin.Javalin;
 
 public class Main {
-
+    
+    private static AES256TextEncryptor encriptador;
+    private static final String contraseña = "admin";
+    
     private static DBServicio dbServicio;
     private static Mercado mercado;
     private static Javalin app;
@@ -20,8 +25,11 @@ public class Main {
     public static void main(String[] args) {
 
 	try {
+	    encriptador = new AES256TextEncryptor();
+	    encriptador.setPassword(contraseña);
+	    
 	    dbServicio = new DBServicio();
-	    mercado = new Mercado();
+	    mercado = new Mercado(encriptador);
 
 	    app = Javalin.create(config -> {
 		config.addStaticFiles("/html");
@@ -30,11 +38,11 @@ public class Main {
 		config.addStaticFiles("/images");
 		config.enableCorsForAllOrigins();
 	    }).start(7000);
-
-	    new SimularDatos(mercado);
+	    
+	    new SimularDatos(mercado, encriptador);
 
 	    new Home(mercado, app).rutas();
-	    new CuentaControlador(mercado, app).rutas();
+	    new CuentaControlador(mercado, encriptador, app).rutas();
 	    new CarritoControlador(mercado, app).rutas();
 	    new AdministrarControlador(mercado, app).rutas();
 	} catch (SQLException e) {

@@ -20,20 +20,19 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="producto : ${productos}">
+					<th:block th:each="existencia : ${existencias}">
 						<tr>
-							<td th:text="${producto.nombre}"></td>
-							<td th:text="${producto.precio}"></td>
+							<td th:text="${existencia.producto.nombre}"></td>
+							<td th:text="${existencia.precio}"></td>
 							<td>
-								<form th:id="${producto.id}" action="/carrito/producto/agregar"
-									th:object="${producto}" method="POST">
-									<input type="hidden" name="id" th:value="${producto.id}" />
+								<form th:id="${existencia.producto.id}" action="/carrito/producto/agregar" method="POST">
+									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
 									<input class="form-control" type="number" value="1" min="1"
 										max="100" name="cantidad" required>
 								</form>
 							</td>
 							<td>
-								<button type="submit" th:form="${producto.id}"
+								<button type="submit" th:form="${existencia.producto.id}"
 									class="btn btn-block btn-success btn-rounded">Agregar</button>
 							</td>
 						</tr>

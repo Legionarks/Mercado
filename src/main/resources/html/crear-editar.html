@@ -11,21 +11,21 @@
 
 		<div class="container">
 			<form class="mx-auto" id="crear-editar"
-				action="/administrar/producto/crear-editar" th:object="${producto}"
+				action="/administrar/producto/crear-editar"
 				method="POST">
 				<h5 class="h5 font-weight-normal">Crear - Editar Producto</h5>
 
-				<input type="hidden" name="id" th:value="${producto.id}">
+				<input type="hidden" name="id" th:value="${existencia.producto.id}">
 				<div class="form-group">
 					<label for="nombre">Nombre</label>
 					<input type="text" id="nombre" name="nombre" class="form-control"
-						placeholder="Ingresar nombre" th:value="${producto.nombre}"
+						placeholder="Ingresar nombre" th:value="${existencia.producto.nombre}"
 						required autofocus>
 				</div>
 				<div class="form-group">
 					<label for="precio">Precio</label>
 					<input type="number" id="precio" name="precio" class="form-control"
-						placeholder="RD$" th:value="${producto.precio}" min="0" step=".01"
+						placeholder="RD$" th:value="${existencia.precio}" min="0" step=".01"
 						required>
 				</div>
 			</form>

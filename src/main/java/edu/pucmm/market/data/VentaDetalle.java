@@ -58,8 +58,10 @@ public class VentaDetalle implements Serializable {
     }
 
     public BigDecimal calcularTotal() {
-	BigDecimal total = BigDecimal.valueOf(this.cantidad * this.precio.doubleValue());
+	double total = 0;
+	
+	total = this.cantidad * this.precio.doubleValue();
 
-	return total.setScale(2, RoundingMode.CEILING);
+	return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
     }
 }

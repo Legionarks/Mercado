@@ -10,6 +10,7 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -31,7 +32,7 @@ public class Venta implements Serializable {
     private Date fechaCompra;
     @Column(name = "Nombre_Cliente")
     private String nombreCliente;
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     @CollectionTable(name = "VENTA_DETALLE")
     private Set<VentaDetalle> ventaDetalles;
 
@@ -77,12 +78,12 @@ public class Venta implements Serializable {
     }
 
     public BigDecimal calcularTotal() {
-	BigDecimal total = new BigDecimal(0);
+	double total = 0;
 
 	for (VentaDetalle detalle : this.ventaDetalles) {
-	    total = total.add(new BigDecimal(detalle.getCantidad() * detalle.getPrecio().doubleValue()));
+	    total += detalle.getCantidad() * detalle.getPrecio().doubleValue();
 	}
 
-	return total.setScale(2, RoundingMode.CEILING);
+	return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
     }
 }

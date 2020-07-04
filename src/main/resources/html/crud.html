@@ -22,23 +22,22 @@
 					</tr>
 				</thead>
 				<tbody>
-					<th:block th:each="producto : ${productos}">
+					<th:block th:each="existencia : ${existencias}">
 						<tr>
-							<td th:text="${producto.nombre}"></td>
-							<td th:text="${producto.precio}"></td>
+							<td th:text="${existencia.producto.nombre}"></td>
+							<td th:text="${existencia.precio}"></td>
 							<td>
-								<form th:id="${producto.id} + 'editar'"
-									action="/administrar/producto/editar" th:object="${producto}"
-									method="POST">
-									<input type="hidden" name="id" th:value="${producto.id}" />
-									<button type="submit" th:form="${producto.id} + 'editar'"
+								<form th:id="${existencia.producto.id} + 'editar'"
+									action="/administrar/producto/editar" method="POST">
+									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
+									<button type="submit" th:form="${existencia.producto.id} + 'editar'"
 										class="btn btn-primary btn-block btn-rounded mb-2">Editar</button>
 								</form>
-								<form th:id="${producto.id} + 'eliminar'"
+								<form th:id="${existencia.producto.id} + 'eliminar'"
 									action="/administrar/producto/eliminar" th:object="${producto}"
 									method="POST">
-									<input type="hidden" name="id" th:value="${producto.id}" />
-									<button type="submit" th:form="${producto.id} + 'eliminar'"
+									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
+									<button type="submit" th:form="${existencia.producto.id} + 'eliminar'"
 										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
 								</form>
 							</td>

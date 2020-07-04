@@ -25,18 +25,18 @@
 						</tr>
 					</thead>
 					<tbody>
-						<th:block th:each="compra : ${venta.listaProductos}">
+						<th:block th:each="compra : ${venta.ventaDetalles}">
 							<tr>
 								<td th:text="${compra.producto.nombre}"></td>
-								<td th:text="${compra.producto.precio}"></td>
+								<td th:text="${compra.precio}"></td>
 								<td th:text="${compra.cantidad}"></td>
-								<td th:text="${compra.calcularTotal()}"></td>
+								<td th:text="${compra.calcularTotal}"></td>
 							</tr>
 						</th:block>
 					</tbody>
 					<tfoot class="text-right table-active font-weight-bold">
 						<tr>
-							<td th:text="'Total: ' + ${venta.calcularTotal()}" colspan="4"></td>
+							<td th:text="'Total: ' + ${venta.calcularTotal}" colspan="4"></td>
 						</tr>
 					</tfoot>
 				</table>

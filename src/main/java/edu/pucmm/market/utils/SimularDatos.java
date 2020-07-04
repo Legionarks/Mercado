@@ -2,15 +2,19 @@ package edu.pucmm.market.utils;
 
 import java.math.BigDecimal;
 
-import edu.pucmm.market.data.CarroCompra;
+import org.jasypt.util.text.AES256TextEncryptor;
+
+import edu.pucmm.market.data.Carro;
 import edu.pucmm.market.data.Mercado;
 
 public class SimularDatos {
     
-    private Mercado mercado;
+    private final Mercado mercado;
+    private final AES256TextEncryptor encriptador;
 
-    public SimularDatos(Mercado mercado) {
+    public SimularDatos(Mercado mercado, AES256TextEncryptor encriptador) {
 	this.mercado = mercado;
+	this.encriptador = encriptador;
 	
 	this.usuarioDefecto();
 	this.productosDefecto();
@@ -21,12 +25,8 @@ public class SimularDatos {
 	return mercado;
     }
 
-    public void setMercado(Mercado mercado) {
-	this.mercado = mercado;
-    }
-
     private void usuarioDefecto() {
-	this.mercado.crearUsuario("admin", "admin", "admin");
+	this.mercado.crearUsuario("admin", "admin", encriptador.encrypt("admin"));
     }
 
     private void productosDefecto() {
@@ -40,19 +40,19 @@ public class SimularDatos {
     }
 
     private void ventasDefecto() {
-	CarroCompra carro;
+	Carro carro;
 	
-	carro = new CarroCompra();
+	carro = new Carro();
 	carro.agregarProducto(this.mercado.getExistencias().get(0), 5);
 	carro.agregarProducto(this.mercado.getExistencias().get(3), 1);
 	carro.agregarProducto(this.mercado.getExistencias().get(5), 7);
 	this.mercado.procesarCompra("Jorge", carro);
 	
-	carro = new CarroCompra();
+	carro = new Carro();
 	carro.agregarProducto(this.mercado.getExistencias().get(2), 5);
 	this.mercado.procesarCompra("Bibi", carro);
 	
-	carro = new CarroCompra();
+	carro = new Carro();
 	carro.agregarProducto(this.mercado.getExistencias().get(0), 5);
 	carro.agregarProducto(this.mercado.getExistencias().get(5), 2);
 	carro.agregarProducto(this.mercado.getExistencias().get(4), 7);
