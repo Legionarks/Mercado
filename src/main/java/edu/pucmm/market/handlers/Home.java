@@ -2,9 +2,6 @@ package edu.pucmm.market.handlers;
 
 import static io.javalin.apibuilder.ApiBuilder.*;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import edu.pucmm.market.data.Carro;
 import edu.pucmm.market.data.Mercado;
 import edu.pucmm.market.data.Usuario;
@@ -23,13 +20,7 @@ public class Home extends ServerHandler {
 
 	    path("/", () -> {
 		get(ctx -> {
-		    Map<String, Object> modelo = new HashMap<String, Object>();
-		    modelo.put("usuario", ctx.sessionAttribute("usuario"));
-		    modelo.put("existencias", getMercado().getExistencias());
-		    modelo.put("carrito_cantidad",
-			    (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
-
-		    ctx.render("/html/index.html", modelo);
+		    ctx.redirect("/productos");
 		});
 	    });
 	});

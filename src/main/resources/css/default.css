@@ -5,6 +5,7 @@ html, body {
 
 body {
 	align-items: center;
+	background-color: #FFFFF5;
 }
 
 header {
@@ -12,15 +13,16 @@ header {
 }
 
 .signin-container {
-	background: linear-gradient(rgba(255,255,255,.5), rgba(255,255,255,.5)), url("https://img.freepik.com/vector-gratis/tiendas-abarrotes-personajes-personas_18591-61671.jpg?size=626&ext=jpg");
-	
+	background: linear-gradient(rgba(255, 255, 255, .5),
+		rgba(255, 255, 255, .5)),
+		url("https://img.freepik.com/vector-gratis/tiendas-abarrotes-personajes-personas_18591-61671.jpg?size=626&ext=jpg");
 	height: 100%;
 	width: 100%;
 	margin: auto;
 	display: -ms-flexbox;
 	display: flex;
 	-ms-flex-align: center;
-}  
+}
 
 .form-signin {
 	width: 100%;
@@ -31,3 +33,46 @@ header {
 	border-radius: 10px;
 }
 
+.widget .panel-body {
+	padding: 0px;
+}
+
+.widget .list-group {
+	margin-bottom: 0;
+}
+
+.widget .panel-title {
+	display: inline
+}
+
+.widget .label-info {
+	float: right;
+}
+
+.widget li.list-group-item {
+	border-radius: 0;
+	border: 0;
+	border-top: 1px solid #ddd;
+}
+
+.widget li.list-group-item:hover {
+	background-color: rgba(86, 61, 124, .1);
+}
+
+.widget .mic-info {
+	color: #666666;
+	font-size: 11px;
+}
+
+.widget .action {
+	margin-top: 5px;
+}
+
+.widget .comment-text {
+	font-size: 12px;
+}
+
+.widget .btn-block {
+	border-top-left-radius: 0px;
+	border-top-right-radius: 0px;
+}

@@ -7,6 +7,8 @@ import java.util.Set;
 
 import org.jasypt.util.text.AES256TextEncryptor;
 
+import edu.pucmm.market.services.ComentarioServicio;
+import edu.pucmm.market.services.FotoServicio;
 import edu.pucmm.market.services.ProductoExistenciaServicio;
 import edu.pucmm.market.services.ProductoServicio;
 import edu.pucmm.market.services.UsuarioServicio;
@@ -18,25 +20,33 @@ public class Mercado {
     private final UsuarioServicio usuarioServicio;
     private final ProductoServicio productoServicio;
     private final ProductoExistenciaServicio productoExistenciaServicio;
+    private final ComentarioServicio comentarioServicio;
     private final VentaServicio ventaServicio;
+    private final FotoServicio fotoServicio;
 
     public Mercado(AES256TextEncryptor encriptador) {
 	this.encriptador = encriptador;
 	this.usuarioServicio = new UsuarioServicio();
 	this.productoServicio = new ProductoServicio();
 	this.productoExistenciaServicio = new ProductoExistenciaServicio();
+	this.comentarioServicio = new ComentarioServicio();
 	this.ventaServicio = new VentaServicio();
+	this.fotoServicio = new FotoServicio();
     }
 
-    public List<Venta> getVentas() {
+    public FotoServicio getFotoServicio() {
+	return fotoServicio;
+    }
+
+    public List<Venta> buscarVentas() {
 	return this.ventaServicio.buscarTodos();
     }
 
-    public List<Producto> getProductos() {
+    public List<Producto> buscarProductos() {
 	return this.productoServicio.buscarTodos();
     }
 
-    public List<ProductoExistencia> getExistencias() {
+    public List<ProductoExistencia> buscarExistencias() {
 	return this.productoExistenciaServicio.buscarTodos();
     }
 
@@ -47,11 +57,19 @@ public class Mercado {
     public ProductoExistencia buscarExistencia(Producto producto) {
 	return this.productoExistenciaServicio.buscar(producto.getId());
     }
-    
+
     public ProductoExistencia buscarExistencia(int id) {
 	return this.productoExistenciaServicio.buscar(id);
     }
+
+    public List<ProductoExistencia> buscarPaginaExistencia(int pagina) {
+	return this.productoExistenciaServicio.obtenerPagina(pagina);
+    }
     
+    public List<Comentario> buscarComentarios(int producto) {
+	return this.comentarioServicio.obtenerComentarios(producto);
+    }
+
     public boolean agregar(Producto producto, BigDecimal precio) {
 	boolean ok = false;
 	ok = this.productoServicio.crear(producto);
@@ -63,20 +81,22 @@ public class Mercado {
 	return this.productoExistenciaServicio.eliminar(this.buscarExistencia(producto));
     }
 
-    public boolean crearEditarProducto(int id, String nombre, BigDecimal precio) {
+    public boolean crearEditarProducto(int id, String nombre, String descripcion, BigDecimal precio, Set<Foto> fotos) {
 	boolean ok = false;
 	Producto producto = this.buscarProducto(id);
 	ProductoExistencia existencia;
 
 	if (producto == null) {
-	    producto = new Producto(nombre);
+	    producto = new Producto(nombre, descripcion, fotos);
 	    ok = this.agregar(producto, precio);
 	} else {
 	    producto.setNombre(nombre);
+	    producto.setDescripcion(descripcion);
+	    producto.getFotos().addAll(fotos);
 	    ok = this.productoServicio.editar(producto);
 
 	    existencia = this.buscarExistencia(producto);
-	    
+
 	    if (existencia == null) {
 		ok = this.productoExistenciaServicio.crear(new ProductoExistencia(producto, precio));
 	    } else {
@@ -130,5 +150,33 @@ public class Mercado {
 	}
 
 	return usuario;
+    }
+
+    public boolean eliminarFotoProducto(int id, String nombre) {
+	boolean ok = false;
+	Producto producto = this.productoServicio.buscar(id);
+
+	if (producto != null) {
+	    producto.eliminarFoto(nombre);
+	    this.productoServicio.editar(producto);
+	    ok = true;
+	}
+
+	return ok;
+    }
+    
+    public boolean eliminarComentario(int comentario) {
+	return this.comentarioServicio.eliminar(comentario);
+    }
+
+    public boolean comentarProducto(int id, String persona, String titulo, String descripcion) {
+	boolean ok = false;
+	Producto producto = this.buscarProducto(id);
+
+	if (producto != null) {
+	    ok = this.comentarioServicio.crear(new Comentario(producto, persona, titulo, descripcion));
+	}
+	
+	return ok;
     }
 }

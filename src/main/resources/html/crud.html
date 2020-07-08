@@ -28,7 +28,7 @@
 							<td th:text="${existencia.precio}"></td>
 							<td>
 								<form th:id="${existencia.producto.id} + 'editar'"
-									action="/administrar/producto/editar" method="POST">
+									action="/administrar/producto/editar" method="GET">
 									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
 									<button type="submit" th:form="${existencia.producto.id} + 'editar'"
 										class="btn btn-primary btn-block btn-rounded mb-2">Editar</button>

@@ -8,7 +8,8 @@
 		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
 		<class>edu.pucmm.market.data.Usuario</class>
 		<class>edu.pucmm.market.data.Producto</class>
-		<class>edu.pucmm.market.data.ProductoExistencia</class>		
+		<class>edu.pucmm.market.data.ProductoExistencia</class>	
+		<class>edu.pucmm.market.data.Comentario</class>	
 		<class>edu.pucmm.market.data.Venta</class>
 		<properties>
 			<property name="javax.persistence.jdbc.url"

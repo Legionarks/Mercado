@@ -9,15 +9,16 @@ import edu.pucmm.market.handlers.AdministrarControlador;
 import edu.pucmm.market.handlers.CarritoControlador;
 import edu.pucmm.market.handlers.CuentaControlador;
 import edu.pucmm.market.handlers.Home;
+import edu.pucmm.market.handlers.ProductoControlador;
 import edu.pucmm.market.services.DBServicio;
 import edu.pucmm.market.utils.SimularDatos;
 import io.javalin.Javalin;
 
 public class Main {
-    
+
     private static AES256TextEncryptor encriptador;
     private static final String contraseña = "admin";
-    
+
     private static DBServicio dbServicio;
     private static Mercado mercado;
     private static Javalin app;
@@ -27,7 +28,7 @@ public class Main {
 	try {
 	    encriptador = new AES256TextEncryptor();
 	    encriptador.setPassword(contraseña);
-	    
+
 	    dbServicio = new DBServicio();
 	    mercado = new Mercado(encriptador);
 
@@ -37,12 +38,13 @@ public class Main {
 		config.addStaticFiles("/templates");
 		config.addStaticFiles("/images");
 		config.enableCorsForAllOrigins();
-	    }).start(7000);
-	    
+	    }).start(puertoHerokuAsignado());
+
 	    new SimularDatos(mercado, encriptador);
 
 	    new Home(mercado, app).rutas();
 	    new CuentaControlador(mercado, encriptador, app).rutas();
+	    new ProductoControlador(mercado, app).rutas();
 	    new CarritoControlador(mercado, app).rutas();
 	    new AdministrarControlador(mercado, app).rutas();
 	} catch (SQLException e) {
@@ -54,5 +56,16 @@ public class Main {
 		ex.printStackTrace();
 	    }
 	}
+    }
+
+    private static int puertoHerokuAsignado() {
+	int port = 7000;
+	ProcessBuilder processBuilder = new ProcessBuilder();
+
+	if (processBuilder.environment().get("PORT") != null) {
+	    port = Integer.parseInt(processBuilder.environment().get("PORT"));
+	}
+
+	return port;
     }
 }

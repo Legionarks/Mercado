@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
+</head>
+<body>
+	<header th:replace="/templates/plantilla.html :: header"></header>
+
+	<main class="main">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-5 col-sm-5 mb-xs-30"
+					style="min-height: 300px; min-width: 300px;">
+					<!-- Imagenes -->
+					<div th:id="'carousel' + ${existencia.producto.id}"
+						class="carousel slide" data-ride="carousel">
+						<div class="carousel-inner">
+							<th:block th:each="foto, stat : ${existencia.producto.fotos}">
+								<div
+									th:class="${stat.first} ? 'carousel-item active' : 'carousel-item'"
+									data-interval="10000">
+									<img width="300px" height="300px"
+										th:src="@{'data:' + ${foto.mimeType} + '; base64,' + ${foto.base64}}"
+										class="d-block w-100" alt="...">
+								</div>
+							</th:block>
+						</div>
+
+						<!-- Controles para las imagenes -->
+						<th:block th:if="${!existencia.producto.fotos.isEmpty}">
+							<a class="carousel-control-prev"
+								th:href="'#carousel' + ${existencia.producto.id}" role="button"
+								data-slide="prev" style="filter: invert(100%);">
+								<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+								<span class="sr-only">Anterior</span>
+							</a>
+							<a class="carousel-control-next"
+								th:href="'#carousel' + ${existencia.producto.id}" role="button"
+								data-slide="next" style="filter: invert(100%);">
+								<span class="carousel-control-next-icon" aria-hidden="true"></span>
+								<span class="sr-only">Siguiente</span>
+							</a>
+						</th:block>
+					</div>
+				</div>
+				<div class="col-md-7 col-sm-5">
+					<div class="row">
+						<div class="col">
+							<h4 th:text="${existencia.producto.nombre}"></h4>
+							<hr>
+						</div>
+					</div>
+					<div class="row">
+						<p class="col" th:text="${existencia.producto.descripcion}"></p>
+					</div>
+					<div class="row">
+						<div class="col">
+							<form action="/producto/info/agregar" method="POST">
+								<input type="hidden" name="id"
+									th:value="${existencia.producto.id}">
+								<div
+									style="float: left; margin-right: 20px; margin-bottom: 10px;">
+									<div style="display: inline-flex;">
+										<button
+											onclick="var result = document.getElementById('cantidad'); var qty = result.value; if( !isNaN( qty ) &amp;&amp; qty > 1 ) result.value--;return false;"
+											style="border: none; color: #888; padding: 8px 15px 8px; float: left; margin: 0 2px;"
+											type="button">
+											<i class="fa fa-minus"></i>
+										</button>
+										<input type="number"
+											style="border: 1px solid #dedede; max-width: 100px; padding: 4px 13px; float: left; text-align: center; margin: 0;"
+											title="Cantidad" value="1" maxlength="2" id="cantidad"
+											min="1" name="cantidad">
+										<button
+											onclick="var result = document.getElementById('cantidad'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;"
+											style="border: none; color: #888; padding: 8px 15px 8px; float: left; margin: 0 2px;"
+											type="button">
+											<i class="fa fa-plus"></i>
+										</button>
+										<button type="submit" style="padding: 8px 15px 8px;"
+											class="form-control btn btn-outline-success ml-2">
+											<img alt="Agregar"
+												src="https://img.icons8.com/color/48/000000/shopping-cart-loaded.png"
+												width="25px" height="25px">
+										</button>
+									</div>
+								</div>
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col"></div>
+			</div>
+			<div class="panel mt-5">
+				<div class="panel panel-default widget">
+					<div class="panel-heading border p-2 bg-light">
+						<span class="fa fa-comment"></span>
+						<h3 class="panel-title">Comentarios</h3>
+						<span class="label label-info" th:text="${comentarios.size}"></span>
+					</div>
+					<div class="panel-body p-3 mb-4" style="background-color: white;">
+						<div class="mt-4 mb-4">
+							<h6>Nuevo Comentario</h6>
+							<form class="mb-4" method="POST"
+								action="/producto/comentario/agregar">
+								<input type="hidden" name="id"
+									th:value="${existencia.producto.id}">
+								<input type="hidden" id="persona" name="persona"
+									value="Desconocido">
+								<input class="form-control mb-2" type="text" id="titulo"
+									name="titulo" placeholder="Titulo" required>
+								<textarea class="form-control" id="descripcion"
+									name="descripcion" placeholder="Escribe tu opinion"
+									maxlength="250" rows="3" required></textarea>
+								<button type="submit" class="btn btn-primary form-control mt-2">Enviar</button>
+							</form>
+						</div>
+
+						<ul class="list-group">
+							<th:block th:each="comentario : ${comentarios}">
+								<li class="list-group-item">
+									<div class="row">
+										<div class="col-xs-2 col-md-1">
+											<img src="http://placehold.it/80"
+												class="img-circle img-responsive" alt="" />
+										</div>
+										<div class="col-xs-10 col-md-11">
+											<div>
+												<h6>
+													<span th:text="${comentario.titulo}"></span>
+												</h6>
+												<div class="mic-info">
+													Por:
+													<span th:text="${comentario.persona}">
+														<!-- th:text="${existencia.producto.comentario.persona}"-->
+													</span>
+													<!-- on 11 Nov 2013 -->
+												</div>
+											</div>
+											<div>
+												<p th:text="${comentario.descripcion}"></p>
+											</div>
+											<div class="action">
+												<!--
+											<button type="button" class="btn btn-primary btn-xs"
+												title="Edit">
+												<span class="glyphicon glyphicon-pencil"></span>
+											</button>
+											<button type="button" class="btn btn-success btn-xs"
+												title="Approved">
+												<span class="glyphicon glyphicon-ok"></span>
+											</button>
+											  -->
+												<form th:if="${usuario != null}" method="POST" action="/producto/comentario/eliminar">
+													<input type="hidden" name="producto"
+														th:value="${existencia.producto.id}">
+													<input type="hidden" name="comentario"
+														th:value="${comentario.id}">
+
+													<button type="submit" class="btn btn-danger btn-xs"
+														title="Eliminar">
+														<span class="fa fa-trash"></span>
+													</button>
+												</form>
+											</div>
+										</div>
+									</div>
+								</li>
+							</th:block>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

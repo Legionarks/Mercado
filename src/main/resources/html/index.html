@@ -8,37 +8,101 @@
 	<main class="main">
 		<div
 			th:replace="/templates/plantilla.html :: titulo(texto='Listado de Productos')"></div>
-
 		<div class="container">
-			<table class="table table-bordered table-hover text-center">
-				<thead class="thead-dark">
-					<tr>
-						<th>Producto</th>
-						<th>Precio (RD$)</th>
-						<th>Cantidad</th>
-						<th>Accion</th>
-					</tr>
-				</thead>
-				<tbody>
-					<th:block th:each="existencia : ${existencias}">
-						<tr>
-							<td th:text="${existencia.producto.nombre}"></td>
-							<td th:text="${existencia.precio}"></td>
-							<td>
-								<form th:id="${existencia.producto.id}" action="/carrito/producto/agregar" method="POST">
-									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
-									<input class="form-control" type="number" value="1" min="1"
-										max="100" name="cantidad" required>
-								</form>
-							</td>
-							<td>
-								<button type="submit" th:form="${existencia.producto.id}"
-									class="btn btn-block btn-success btn-rounded">Agregar</button>
-							</td>
-						</tr>
-					</th:block>
-				</tbody>
-			</table>
+			<div class="card-deck mb-3 text-center justify-content-center"
+				style="text-align: center;">
+
+				<th:block th:each="existencia : ${existencias}">
+					<div class="card mb-4 justify-content-center"
+						style="border: none; max-width: 300px; max-height: 325px; text-align: center; min-width: 300px;">
+						<div style="max-width: 300px; height: 225px">
+
+							<div th:id="'carousel' + ${existencia.producto.id}"
+								class="carousel slide" data-ride="carousel">
+								<div class="carousel-inner">
+									<th:block th:each="foto, stat : ${existencia.producto.fotos}">
+										<div
+											th:class="${stat.first} ? 'carousel-item active' : 'carousel-item'"
+											data-interval="10000">
+											<img style="width: 250px; height: 200px"
+												th:src="@{'data:' + ${foto.mimeType} + '; base64,' + ${foto.base64}}"
+												class="d-block w-100" alt="...">
+										</div>
+									</th:block>
+								</div>
+
+								<!-- Controles para las imagenes -->
+								<th:block th:if="${!existencia.producto.fotos.isEmpty}">
+									<a class="carousel-control-prev"
+										th:href="'#carousel' + ${existencia.producto.id}"
+										role="button" data-slide="prev" style="filter: invert(100%);">
+										<span class="carousel-control-prev-icon" aria-hidden="true"></span>
+										<span class="sr-only">Anterior</span>
+									</a>
+									<a class="carousel-control-next"
+										th:href="'#carousel' + ${existencia.producto.id}"
+										role="button" data-slide="next" style="filter: invert(100%);">
+										<span class="carousel-control-next-icon" aria-hidden="true"></span>
+										<span class="sr-only">Siguiente</span>
+									</a>
+								</th:block>
+							</div>
+						</div>
+
+						<div class="text-left">
+							<a th:href="@{/producto/info(id=${existencia.producto.id})}">
+								<span class="card-title" th:text="${existencia.producto.nombre}"></span>
+							</a>
+							<br>
+							<h6 class="pricing-card-title"
+								th:text="'RD$ ' + ${existencia.precio}"></h6>
+						</div>
+
+						<!-- Controles -->
+						<form class="text-center" th:id="${existencia.producto.id}"
+							action="/carrito/producto/agregar" method="POST">
+							<input type="hidden" name="id"
+								th:value="${existencia.producto.id}">
+
+							<table style="width: 100%">
+								<tr>
+									<td>
+										<input class="form-control" type="number" value="1" min="1"
+											max="100" name="cantidad" required>
+									</td>
+									<td>
+										<button type="submit" th:form="${existencia.producto.id}"
+											class="form-control btn btn-outline-success">
+											<img alt="Agregar"
+												src="https://img.icons8.com/color/48/000000/shopping-cart-loaded.png"
+												width="25px" height="25px">
+										</button>
+									</td>
+								</tr>
+							</table>
+						</form>
+					</div>
+				</th:block>
+			</div>
+			<ul class="pagination justify-content-center">
+				<th:block
+					th:each="indice, stat : ${#numbers.sequence(1, existencias_cantidad, 1)}">
+					<li th:class="${pagina == 1} ? 'page-item disabled' : 'page-item'"
+						th:if="${stat.first}">
+						<a class="page-link" th:href="@{/productos(pagina=${pagina-1})}">Anterior</a>
+					</li>
+					<li
+						th:class="${pagina == indice} ? 'page-item disabled' : 'page-item'">
+						<a class="page-link" th:href="@{/productos(pagina=${indice})}"
+							th:text="${indice}"></a>
+					</li>
+					<li
+						th:class="${pagina == existencias_cantidad} ? 'page-item disabled' : 'page-item order-last'"
+						th:if="${stat.last}">
+						<a class="page-link" th:href="@{/productos(pagina=${pagina+1})}">Siguiente</a>
+					</li>
+				</th:block>
+			</ul>
 		</div>
 	</main>
 </body>
