@@ -10,48 +10,48 @@ import javax.persistence.Table;
 @Embeddable
 @Table(name = "FOTO_PRODUCTO")
 public class Foto implements Serializable {
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-    @Column(name = "Nombre")
-    private String nombre;
-    @Column(name = "MIME")
-    private String mimeType;
-    @Lob
-    @Column(name = "BASE64")
-    private String base64;
- 
-    public Foto(String nombre, String mimeType, String base64){
-        this.nombre = nombre;
-        this.mimeType = mimeType;
-        this.base64 = base64;
-    }
-    
-    public Foto(){
-    }
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Column(name = "Nombre")
+	private String nombre;
+	@Column(name = "MIME")
+	private String mimeType;
+	@Lob
+	@Column(name = "BASE64")
+	private String base64;
 
-    public String getNombre() {
-        return nombre;
-    }
+	public Foto(String nombre, String mimeType, String base64) {
+		this.nombre = nombre;
+		this.mimeType = mimeType;
+		this.base64 = base64;
+	}
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
+	public Foto() {
+	}
 
-    public String getMimeType() {
-        return mimeType;
-    }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public String getBase64() {
-        return base64;
-    }
+	public String getMimeType() {
+		return mimeType;
+	}
 
-    public void setBase64(String base64) {
-        this.base64 = base64;
-    }
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+	}
+
+	public String getBase64() {
+		return base64;
+	}
+
+	public void setBase64(String base64) {
+		this.base64 = base64;
+	}
 }

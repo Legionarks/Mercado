@@ -13,55 +13,55 @@ import javax.persistence.Table;
 @Table(name = "VENTA_DETALLE")
 public class VentaDetalle implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-    @OneToOne
-    private Producto producto;
-    @Column(name = "Precio")
-    private BigDecimal precio;
-    @Column(name = "Cantidad")
-    private int cantidad;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@OneToOne
+	private Producto producto;
+	@Column(name = "Precio")
+	private BigDecimal precio;
+	@Column(name = "Cantidad")
+	private int cantidad;
 
-    public VentaDetalle(Producto producto, BigDecimal precio, int cantidad) {
-	this.producto = producto;
-	this.precio = precio;
-	this.cantidad = cantidad;
-    }
+	public VentaDetalle(Producto producto, BigDecimal precio, int cantidad) {
+		this.producto = producto;
+		this.precio = precio;
+		this.cantidad = cantidad;
+	}
 
-    public VentaDetalle() {
-    }
+	public VentaDetalle() {
+	}
 
-    public Producto getProducto() {
-        return producto;
-    }
+	public Producto getProducto() {
+		return producto;
+	}
 
-    public void setProducto(Producto producto) {
-        this.producto = producto;
-    }
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 
-    public BigDecimal getPrecio() {
-        return precio;
-    }
+	public BigDecimal getPrecio() {
+		return precio;
+	}
 
-    public void setPrecio(BigDecimal precio) {
-        this.precio = precio;
-    }
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
+	}
 
-    public int getCantidad() {
-	return cantidad;
-    }
+	public int getCantidad() {
+		return cantidad;
+	}
 
-    public void setCantidad(int cantidad) {
-	this.cantidad = cantidad;
-    }
+	public void setCantidad(int cantidad) {
+		this.cantidad = cantidad;
+	}
 
-    public BigDecimal calcularTotal() {
-	double total = 0;
-	
-	total = this.cantidad * this.precio.doubleValue();
+	public BigDecimal calcularTotal() {
+		double total = 0;
 
-	return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
-    }
+		total = this.cantidad * this.precio.doubleValue();
+
+		return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
+	}
 }

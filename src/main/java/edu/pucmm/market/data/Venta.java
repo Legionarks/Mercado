@@ -20,70 +20,70 @@ import javax.persistence.Table;
 @Table(name = "VENTA")
 public class Venta implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ID_Venta")
-    private long id;
-    @Column(name = "Fecha_Compra")
-    private Date fechaCompra;
-    @Column(name = "Nombre_Cliente")
-    private String nombreCliente;
-    @ElementCollection(fetch = FetchType.EAGER)
-    @CollectionTable(name = "VENTA_DETALLE")
-    private Set<VentaDetalle> ventaDetalles;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "ID_Venta")
+	private long id;
+	@Column(name = "Fecha_Compra")
+	private Date fechaCompra;
+	@Column(name = "Nombre_Cliente")
+	private String nombreCliente;
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "VENTA_DETALLE")
+	private Set<VentaDetalle> ventaDetalles;
 
-    public Venta(String nombreCliente, Set<VentaDetalle> ventaDetalles) {
-	this.fechaCompra = new Date(System.currentTimeMillis());
-	this.nombreCliente = nombreCliente;
-	this.ventaDetalles = ventaDetalles;
-    }
-
-    public Venta() {
-    }
-
-    public long getId() {
-	return id;
-    }
-
-    public void setId(long id) {
-	this.id = id;
-    }
-
-    public Date getFechaCompra() {
-	return fechaCompra;
-    }
-
-    public void setFechaCompra(Date fechaCompra) {
-	this.fechaCompra = fechaCompra;
-    }
-
-    public String getNombreCliente() {
-	return nombreCliente;
-    }
-
-    public void setNombreCliente(String nombreCliente) {
-	this.nombreCliente = nombreCliente;
-    }
-
-    public Set<VentaDetalle> getVentaDetalles() {
-	return ventaDetalles;
-    }
-
-    public void setVentaDetalles(Set<VentaDetalle> ventaDetalles) {
-	this.ventaDetalles = ventaDetalles;
-    }
-
-    public BigDecimal calcularTotal() {
-	double total = 0;
-
-	for (VentaDetalle detalle : this.ventaDetalles) {
-	    total += detalle.getCantidad() * detalle.getPrecio().doubleValue();
+	public Venta(String nombreCliente, Set<VentaDetalle> ventaDetalles) {
+		this.fechaCompra = new Date(System.currentTimeMillis());
+		this.nombreCliente = nombreCliente;
+		this.ventaDetalles = ventaDetalles;
 	}
 
-	return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
-    }
+	public Venta() {
+	}
+
+	public long getId() {
+		return id;
+	}
+
+	public void setId(long id) {
+		this.id = id;
+	}
+
+	public Date getFechaCompra() {
+		return fechaCompra;
+	}
+
+	public void setFechaCompra(Date fechaCompra) {
+		this.fechaCompra = fechaCompra;
+	}
+
+	public String getNombreCliente() {
+		return nombreCliente;
+	}
+
+	public void setNombreCliente(String nombreCliente) {
+		this.nombreCliente = nombreCliente;
+	}
+
+	public Set<VentaDetalle> getVentaDetalles() {
+		return ventaDetalles;
+	}
+
+	public void setVentaDetalles(Set<VentaDetalle> ventaDetalles) {
+		this.ventaDetalles = ventaDetalles;
+	}
+
+	public BigDecimal calcularTotal() {
+		double total = 0;
+
+		for (VentaDetalle detalle : this.ventaDetalles) {
+			total += detalle.getCantidad() * detalle.getPrecio().doubleValue();
+		}
+
+		return BigDecimal.valueOf(total).setScale(2, RoundingMode.CEILING);
+	}
 }

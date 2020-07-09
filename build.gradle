@@ -17,7 +17,7 @@ repositories {
 }
 
 group 'edu.pucmm.market'
-version '1.0-SNAPSHOT'
+version '3.0-SNAPSHOT'
 mainClassName = 'edu.pucmm.market.Main'
 
 dependencies {
@@ -33,5 +33,4 @@ dependencies {
 	compile group: 'org.jasypt', name: 'jasypt', version: '1.9.3'
 	
 	compile group: 'org.hibernate', name: 'hibernate-core', version: '5.4.18.Final'
-	compile group: 'org.hibernate.orm', name: 'hibernate-entitymanager', version: '5.4.18.Final'
 }

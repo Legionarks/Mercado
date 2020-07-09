@@ -13,37 +13,37 @@ import javax.persistence.Table;
 @Table(name = "PRODUCTO_EXISTENCIA")
 public class ProductoExistencia implements Serializable {
 
-    /**
-     * 
-     */
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    @OneToOne
-    private Producto producto;
-    @Column(name = "Precio")
-    private BigDecimal precio;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	@EmbeddedId
+	@OneToOne
+	private Producto producto;
+	@Column(name = "Precio")
+	private BigDecimal precio;
 
-    public ProductoExistencia(Producto producto, BigDecimal precio) {
-	this.producto = producto;
-	this.precio = precio;
-    }
+	public ProductoExistencia(Producto producto, BigDecimal precio) {
+		this.producto = producto;
+		this.precio = precio;
+	}
 
-    public ProductoExistencia() {
-    }
+	public ProductoExistencia() {
+	}
 
-    public Producto getProducto() {
-	return producto;
-    }
+	public Producto getProducto() {
+		return producto;
+	}
 
-    public void setProducto(Producto producto) {
-	this.producto = producto;
-    }
+	public void setProducto(Producto producto) {
+		this.producto = producto;
+	}
 
-    public BigDecimal getPrecio() {
-	return precio;
-    }
+	public BigDecimal getPrecio() {
+		return precio;
+	}
 
-    public void setPrecio(BigDecimal precio) {
-	this.precio = precio;
-    }
+	public void setPrecio(BigDecimal precio) {
+		this.precio = precio;
+	}
 }
