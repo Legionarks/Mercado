@@ -145,16 +145,16 @@ public class Mercado {
 		return ok;
 	}
 
-	public Usuario autenticarUsuario(String idUsuario, String contraseña, boolean encriptado) {
+	public Usuario autenticarUsuario(String idUsuario, String contraseÃ±a, boolean encriptado) {
 		Usuario usuario = this.usuarioServicio.buscar(idUsuario);
 
 		if (usuario != null) {
 			if (encriptado) {
-				if (!(encriptador.decrypt(contraseña).equals(encriptador.decrypt(usuario.getContraseña())))) {
+				if (!(encriptador.decrypt(contraseÃ±a).equals(encriptador.decrypt(usuario.getContraseÃ±a())))) {
 					usuario = null;
 				}
 			} else {
-				if (!(contraseña.equals(encriptador.decrypt(usuario.getContraseña())))) {
+				if (!(contraseÃ±a.equals(encriptador.decrypt(usuario.getContraseÃ±a())))) {
 					usuario = null;
 				}
 			}

@@ -35,13 +35,13 @@ public class SimularDatos {
 	private void productosDefecto() {
 		Set<Foto> fotos = new HashSet<Foto>();
 		this.mercado.crearEditarProducto(1, "Apio",
-				"La base de una dieta equilibrada necesita un aporte extra de vitaminas. La mayoría de ellas las obtenemos de las frutas y verduras. Una de las hortalizas que mayores beneficios aportan a nuestra salud es el apio.",
+				"La base de una dieta equilibrada necesita un aporte extra de vitaminas. La mayorï¿½a de ellas las obtenemos de las frutas y verduras. Una de las hortalizas que mayores beneficios aportan a nuestra salud es el apio.",
 				BigDecimal.valueOf(55.25), fotos);
 		this.mercado.crearEditarProducto(2, "Tomate",
-				"Es difícil encontrar a alguien a quien no le guste el tomate, y es que el tomate, no sólo enriquece nuestras recetas sino que aporta muchos beneficios para la salud.",
+				"Es difÃ­cil encontrar a alguien a quien no le guste el tomate, y es que el tomate, no solo enriquece nuestras recetas sino que aporta muchos beneficios para la salud.",
 				BigDecimal.valueOf(20.00), fotos);
 		this.mercado.crearEditarProducto(3, "Pollo",
-				"Posiblemente, esta carne sea la más popular del mundo. Este ave es muy sana, económica, alta en proteínas y baja en grasas. Además ofrece mucha versatilidad en la cocina y es apta para todo el mundo, al tratarse de una carne blanca.",
+				"Posiblemente, esta carne sea la mÃ¡s popular del mundo. Esta ave es muy sana, econÃ³mica, alta en proteÃ­nas y baja en grasas. AdemÃ¡s, ofrece mucha versatilidad en la cocina y es apta para todo el mundo, al tratarse de una carne blanca.",
 				BigDecimal.valueOf(385.95), fotos);
 		this.mercado.crearEditarProducto(4, "Paquete de pan",
 				"Incluir el pan en cada una de las comidas que realizamos a diario es una buena forma de cubrir las cinco o seis raciones diarias de hidratos de carbono recomendadas por los especialistas.",
@@ -50,22 +50,22 @@ public class SimularDatos {
 				"Hay muy poca gente a la que no le guste un buen queso... El queso es un alimento muy asequible, muy agradecido y muy sabroso, y por ello no suele faltar en ninguna cocina o mesa que se precie.",
 				BigDecimal.valueOf(90.15), fotos);
 		this.mercado.crearEditarProducto(6, "Manzana",
-				"La manzana es una fruta de gran valor nutritivo que debe estar presente en nuestra alimentación. ¡Tú salud lo agradecerá! Si aún no estás convencida, te damos más motivos para comer manzana.",
+				"La manzana es una fruta de gran valor nutritivo que debe estar presente en nuestra alimentaciÃ³n. Â¡Tu salud lo agradecerÃ¡! Si aÃºn no estas convencida, te damos mÃ¡s motivos para comer manzana.",
 				BigDecimal.valueOf(15.15), fotos);
-		this.mercado.crearEditarProducto(7, "Piña",
-				"Una fruta tropical que también se cultiva en España, en Murcia o en Canarias por ejemplo La piña tiene antioxidantes, vitaminas, minerales y otras ventajas saludables.",
+		this.mercado.crearEditarProducto(7, "Piï¿½a",
+				"Una fruta tropical que tambiÃ©n se cultiva en EspaÃ±a, en Murcia o en Canarias por ejemplo La piÃ±a tiene antioxidantes, vitaminas, minerales y otras ventajas saludables.",
 				BigDecimal.valueOf(45.00), fotos);
 		this.mercado.crearEditarProducto(8, "Mouse",
-				"Diseño ergonómico, Ratón USB 3D, rodillo de alta precisión, posicionamiento óptico exacto, uso de largo tiempo, rendimiento fiable, durabilidad, forma cómoda del ratón de la manija.",
+				"DiseÃ±o ergonÃ³mico, RatÃ³n USB 3D, rodillo de alta precisiÃ³n, posicionamiento Ã³ptico exacto, uso de largo tiempo, rendimiento fiable, durabilidad, forma cÃ³moda del ratÃ³n de la manija.",
 				BigDecimal.valueOf(236.00), fotos);
-		this.mercado.crearEditarProducto(9, "Bocina", "¡La moda retro en una bocina!", BigDecimal.valueOf(1888.00),
+		this.mercado.crearEditarProducto(9, "Bocina", "La moda retro en una bocina!", BigDecimal.valueOf(1888.00),
 				fotos);
 		this.mercado.crearEditarProducto(10, "Headphones",
-				"Auriculares de llamativos colores con un diseño cómodo y seguro, pero sobre todo muy divertido. Protege la audición de los menores al limitar el volumen a 85dB, el máximo nivel recomendado por los médicos.",
+				"Auriculares de llamativos colores con un diseÃ±o cÃ³modo y seguro, pero sobre todo muy divertido. Protege la audiciÃ³n de los menores al limitar el volumen a 85dB, el mÃ¡ximo nivel recomendado por los mÃ©dicos.",
 				BigDecimal.valueOf(885.00), fotos);
 		this.mercado.crearEditarProducto(11, "Laptop", "Lo mejor del mercado", BigDecimal.valueOf(68381.00), fotos);
-		this.mercado.crearEditarProducto(12, "Cámara Web",
-				"Videoconferencias Full HD 1080p (hasta 1920 x 1080 píxeles) con la versión más reciente de Skype para Windows. Videoconferencias HD 720p (1280 x 720 píxeles) con clientes compatibles. Grabaciones de video Full HD (hasta 1920 x 1080 píxeles).",
+		this.mercado.crearEditarProducto(12, "Camara Web",
+				"Videoconferencias Full HD 1080p (hasta 1920 x 1080 pixeles) con la versiÃ³n mÃ¡s reciente de Skype para Windows. Videoconferencias HD 720p (1280 x 720 pixeles) con clientes compatibles. Grabaciones de video Full HD (hasta 1920 x 1080 pixeles).",
 				BigDecimal.valueOf(4130.00), fotos);
 	}
 

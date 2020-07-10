@@ -19,13 +19,13 @@ public class Usuario implements Serializable {
 	private String usuario;
 	@Column(name = "Nombre")
 	private String nombre;
-	@Column(name = "Contraseña")
-	private String contraseña;
+	@Column(name = "ContraseÃ±a")
+	private String contraseÃ±a;
 
-	public Usuario(String usuario, String nombre, String contraseña) {
+	public Usuario(String usuario, String nombre, String contraseÃ±a) {
 		this.usuario = usuario;
 		this.nombre = nombre;
-		this.contraseña = contraseña;
+		this.contraseÃ±a = contraseÃ±a;
 	}
 
 	public Usuario() {
@@ -47,11 +47,11 @@ public class Usuario implements Serializable {
 		this.nombre = nombre;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getContraseÃ±a() {
+		return contraseÃ±a;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setContraseÃ±a(String contraseÃ±a) {
+		this.contraseÃ±a = contraseÃ±a;
 	}
 }

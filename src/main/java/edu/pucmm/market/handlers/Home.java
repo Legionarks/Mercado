@@ -28,17 +28,17 @@ public class Home extends ServerHandler {
 		getApp().before(ctx -> {
 			Usuario usuario = ctx.sessionAttribute("usuario");
 			String idUsuario;
-			String contraseñaEncriptada;
+			String contraseÃ±aEncriptada;
 			Carro carrito = ctx.sessionAttribute("carrito");
 
 			if (usuario == null) {
 				idUsuario = ctx.cookie("usuario");
-				contraseñaEncriptada = ctx.cookie("contrasena");
+				contraseÃ±aEncriptada = ctx.cookie("contrasena");
 
-				if (idUsuario != null && contraseñaEncriptada != null) {
-					if (!((idUsuario + contraseñaEncriptada).isBlank()
-							|| (idUsuario + contraseñaEncriptada).isEmpty())) {
-						usuario = getMercado().autenticarUsuario(idUsuario, contraseñaEncriptada, true);
+				if (idUsuario != null && contraseÃ±aEncriptada != null) {
+					if (!((idUsuario + contraseÃ±aEncriptada).isBlank()
+							|| (idUsuario + contraseÃ±aEncriptada).isEmpty())) {
+						usuario = getMercado().autenticarUsuario(idUsuario, contraseÃ±aEncriptada, true);
 
 						if (usuario != null) {
 							ctx.sessionAttribute("usuario", usuario);

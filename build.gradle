@@ -20,6 +20,10 @@ group 'edu.pucmm.market'
 version '3.0-SNAPSHOT'
 mainClassName = 'edu.pucmm.market.Main'
 
+tasks.withType(JavaCompile) {
+  options.encoding = "UTF-8"
+}
+
 dependencies {
     // Javalin is a true microframework
     compile 'io.javalin:javalin:3.9.0'

@@ -31,17 +31,17 @@ public class CuentaControlador extends ServerHandler {
 
 				post("/logear", ctx -> {
 					String idUsuario = ctx.formParam("usuario");
-					String contraseña = ctx.formParam("contrasena");
+					String contraseÃ±a = ctx.formParam("contrasena");
 					boolean recordarme = ctx.formParam("recordarme") != null;
 
-					Usuario usuario = getMercado().autenticarUsuario(idUsuario, contraseña, false);
+					Usuario usuario = getMercado().autenticarUsuario(idUsuario, contraseÃ±a, false);
 
 					if (usuario != null) {
 						ctx.sessionAttribute("usuario", usuario);
 
 						if (recordarme) {
 							ctx.cookie("usuario", usuario.getUsuario(), 604800);
-							ctx.cookie("contrasena", this.encriptador.encrypt(contraseña), 604800);
+							ctx.cookie("contrasena", this.encriptador.encrypt(contraseÃ±a), 604800);
 						}
 
 						ctx.redirect("/");

@@ -17,7 +17,7 @@ import io.javalin.Javalin;
 public class Main {
 
 	private static AES256TextEncryptor encriptador;
-	private static final String contraseña = "admin";
+	private static final String contraseÃ±a = "admin";
 
 	private static DBServicio dbServicio;
 	private static Mercado mercado;
@@ -27,7 +27,7 @@ public class Main {
 
 		try {
 			encriptador = new AES256TextEncryptor();
-			encriptador.setPassword(contraseña);
+			encriptador.setPassword(contraseÃ±a);
 
 			dbServicio = new DBServicio();
 			mercado = new Mercado(encriptador);
@@ -59,13 +59,13 @@ public class Main {
 	}
 
 	private static int puertoHeroku() {
-		int port = 7000;
+		int puerto = 7000;
 		ProcessBuilder processBuilder = new ProcessBuilder();
 
 		if (processBuilder.environment().get("PORT") != null) {
-			port = Integer.parseInt(processBuilder.environment().get("PORT"));
+			puerto = Integer.parseInt(processBuilder.environment().get("PORT"));
 		}
 
-		return port;
+		return puerto;
 	}
 }
