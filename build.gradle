@@ -10,6 +10,7 @@ plugins {
     // Apply the java-library plugin to add support for Java Library
     id 'java'
     id 'application'
+    id 'com.github.johnrengelman.shadow' version '5.2.0'
 }
 
 repositories {
@@ -37,6 +38,16 @@ jar {
                    'Implementation-Title': project.name,
                    'Implementation-Version': project.version)
     }
+}
+
+shadowJar{
+    baseName = 'app'
+    classifier = ''
+    archiveVersion = ''
+}
+
+task stage {
+    dependsOn shadowJar
 }
 
 tasks.withType(JavaCompile) {
