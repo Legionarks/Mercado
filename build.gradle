@@ -33,7 +33,8 @@ dependencies {
 
 jar {
     manifest {
-        attributes('Implementation-Title': project.name,
+        attributes('Main-Class': 'edu.pucmm.market.Main',
+                   'Implementation-Title': project.name,
                    'Implementation-Version': project.version)
     }
 }
