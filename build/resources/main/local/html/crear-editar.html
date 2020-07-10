@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
+</head>
+<body>
+	<header th:replace="/templates/plantilla.html :: header"></header>
+
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='Crear - Editar Producto')"></div>
+
+		<div class="container">
+			<div class="jumbotron">
+				<h4>Producto</h4>
+				<p class="lead">Informacion del Producto</p>
+			</div>
+
+			<h4>Detalles</h4>
+			<hr>
+
+			<form class="mx-auto" id="crear-editar"
+				action="/administrar/producto/crear-editar"
+				enctype="multipart/form-data" method="POST">
+
+				<input type="hidden" name="id" th:value="${existencia.producto.id}">
+				<div class="form-group">
+					<label for="nombre">Nombre</label>
+					<input type="text" id="nombre" name="nombre" class="form-control"
+						placeholder="Ingresar nombre"
+						th:value="${existencia.producto.nombre}" required autofocus>
+				</div>
+				<div class="form-group">
+					<label for="precio">Precio</label>
+					<input type="number" id="precio" name="precio" class="form-control"
+						placeholder="RD$" th:value="${existencia.precio}" min="0"
+						step=".01" required>
+				</div>
+				<div class="form-group">
+					<label for="descripcion">Descripcion</label>
+					<textarea class="form-control" id="descripcion" name="descripcion"
+						rows="5" placeholder="Ingrese una descripcion"
+						th:text="${existencia.producto.descripcion}" maxlength="250" required></textarea>
+				</div>
+
+				<h4>Fotos</h4>
+				<hr>
+				<div class="form-group">
+					<label for="foto">Foto</label>
+					<input type="file" class="form-control-file" id="foto" name="foto"
+						multiple accept='image/*' th:required="${existencia.producto.fotos.isEmpty} ? 'required' : null">
+				</div>
+
+				<div th:if="${!existencia.producto.fotos.isEmpty}">
+					<hr>
+					<table class="table table-bordered table-hover text-center">
+						<thead class="thead-dark">
+							<tr>
+								<th scope="col">#</th>
+								<th scope="col">Nombre</th>
+								<th scope="col">Tipo</th>
+								<th scope="col">Accion</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="foto, stat : ${existencia.producto.fotos}">
+								<th th:text="${stat.count}" scope="row"></th>
+								<td th:text="${foto.nombre}"></td>
+								<td th:text="${foto.mimeType}"></td>
+								<td>
+									<button type="button" class="btn btn-secondary"
+										data-toggle="modal" th:data-target="'#modal' + ${stat.count}">Visualizar</button>
+									<a
+										th:href="@{/administrar/producto/crear-editar/foto/eliminar(id=${existencia.producto.id}, nombre=${foto.nombre})}"
+										class="btn btn-danger">Eliminar</a>
+
+									<!-- The Modal -->
+									<div class="modal fade" th:id="'modal' + ${stat.count}">
+										<div class="modal-dialog modal-dialog-centered">
+											<div class="modal-content">
+
+												<!-- Modal Header -->
+												<div class="modal-header">
+													<h4 class="modal-title" th:text="${foto.nombre}"></h4>
+													<button type="button" class="close" data-dismiss="modal">&times;</button>
+												</div>
+
+												<!-- Modal body -->
+												<div class="modal-body">
+													<img class="img-fluid" alt="Foto"
+														th:src="@{'data:'+${foto.mimeType} + '; base64,'+ ${foto.base64}}">
+												</div>
+
+												<!-- Modal footer -->
+												<div class="modal-footer">
+													<button type="button" class="btn btn-danger"
+														data-dismiss="modal">Cerrar</button>
+												</div>
+											</div>
+										</div>
+									</div>
+								</td>
+
+							</tr>
+						</tbody>
+					</table>
+				</div>
+			</form>
+
+			<div class="row mt-5 mb-5">
+				<a class="col btn btn-secondary" role="button"
+					href="/administrar/productos">Cancelar</a>
+				<button class="col btn btn-primary" form="crear-editar"
+					type="submit">Aceptar</button>
+			</div>
+		</div>
+	</main>
+</body>
+</html>

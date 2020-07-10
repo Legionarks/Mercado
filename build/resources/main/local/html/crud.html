@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
+</head>
+<body>
+	<header th:replace="/templates/plantilla.html :: header"></header>
+
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='CRUD Productos')"></div>
+
+		<div class="container">
+			<a href="/administrar/producto/crear" class="btn btn-success mb-2"
+				role="button">Crear Producto</a>
+
+			<table class="table table-bordered table-hover text-center">
+				<thead class="thead-dark">
+					<tr>
+						<th>Producto</th>
+						<th>Precio (RD$)</th>
+						<th>Accion</th>
+					</tr>
+				</thead>
+				<tbody>
+					<th:block th:each="existencia : ${existencias}">
+						<tr>
+							<td th:text="${existencia.producto.nombre}"></td>
+							<td th:text="${existencia.precio}"></td>
+							<td>
+								<form th:id="${existencia.producto.id} + 'editar'"
+									action="/administrar/producto/editar" method="GET">
+									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
+									<button type="submit" th:form="${existencia.producto.id} + 'editar'"
+										class="btn btn-primary btn-block btn-rounded mb-2">Editar</button>
+								</form>
+								<form th:id="${existencia.producto.id} + 'eliminar'"
+									action="/administrar/producto/eliminar" th:object="${producto}"
+									method="POST">
+									<input type="hidden" name="id" th:value="${existencia.producto.id}" />
+									<button type="submit" th:form="${existencia.producto.id} + 'eliminar'"
+										class="btn btn-danger btn-block btn-rounded">Eliminar</button>
+								</form>
+							</td>
+						</tr>
+					</th:block>
+				</tbody>
+			</table>
+		</div>
+	</main>
+</body>
+</html>

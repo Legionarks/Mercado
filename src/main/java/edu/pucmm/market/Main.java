@@ -13,6 +13,7 @@ import edu.pucmm.market.handlers.ProductoControlador;
 import edu.pucmm.market.services.DBServicio;
 import edu.pucmm.market.utils.SimularDatos;
 import io.javalin.Javalin;
+import io.javalin.core.util.RouteOverviewPlugin;
 
 public class Main {
 
@@ -33,10 +34,8 @@ public class Main {
 			mercado = new Mercado(encriptador);
 
 			app = Javalin.create(config -> {
-				config.addStaticFiles("/html");
-				config.addStaticFiles("/css");
-				config.addStaticFiles("/templates");
-				config.addStaticFiles("/images");
+				config.addStaticFiles("/local");
+				config.registerPlugin(new RouteOverviewPlugin("/administrar/rutas"));
 				config.enableCorsForAllOrigins();
 			}).start(puertoHeroku());
 

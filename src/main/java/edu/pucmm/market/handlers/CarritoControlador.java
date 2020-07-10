@@ -27,7 +27,7 @@ public class CarritoControlador extends ServerHandler {
 					modelo.put("carrito", carrito);
 					modelo.put("carrito_cantidad", carrito.cantidadProductos());
 
-					ctx.render("/html/carrito.html", modelo);
+					ctx.render("/local/html/carrito.html", modelo);
 				});
 
 				post("/producto/agregar", ctx -> {

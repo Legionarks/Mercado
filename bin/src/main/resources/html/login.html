@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
+</head>
+<body>
+	<div class="signin-container">
+		<div class="form-signin text-center">
+			<form action="/cuenta/logear" method="POST">
+				<img class="mb-4"
+					src="https://img.icons8.com/pastel-glyph/64/000000/shop.png" alt=""
+					width="72" height="72">
+				<h3 class="mb-3 font-weight-normal text-left">Ingrese sus datos</h3>
+
+				<div class="form-group">
+					<label for="usuario" class="sr-only">Usuario</label>
+					<input type="text" id="usuario" name="usuario"
+						class="mb-3 form-control" placeholder="Usuario" required autofocus>
+				</div>
+				<div class="form-group">
+					<label for="contrasena" class="mb-3 sr-only">Contraseña</label>
+					<input type="password" id="contrasena" name="contrasena"
+						class="mb-3 form-control" placeholder="Contraseña" required>
+				</div>
+				<div class="form-group form-check text-left">
+					<input type="checkbox" class="form-check-input" id="recordarme"
+						name="recordarme">
+					<label class="form-check-label" for="recordarme">Recordarme</label>
+				</div>
+
+				<button class="btn btn-block btn-rounded btn-primary" type="submit">Iniciar
+					sesion</button>
+				<a class="btn btn-block btn-rounded btn-secondary" role="button"
+					href="/">Cancelar</a>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

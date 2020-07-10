@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="es">
+<head th:replace="/templates/plantilla.html :: head">
+</head>
+<body>
+	<header th:replace="/templates/plantilla.html :: header"></header>
+
+	<main class="main">
+		<div
+			th:replace="/templates/plantilla.html :: titulo(texto='Listado de Ventas Realizada')"></div>
+			
+		<div class="container">
+			<th:block th:each="venta : ${ventas}">
+				<table class="table table-bordered table-hover text-center">
+					<thead class="thead-dark">
+						<h5>
+							<span
+								th:text="${venta.nombreCliente} + ' - ' + ${venta.fechaCompra}"></span>
+						</h5>
+						<tr>
+							<th>Producto</th>
+							<th>Precio (RD$)</th>
+							<th>Cantidad</th>
+							<th>Total (RD$)</th>
+						</tr>
+					</thead>
+					<tbody>
+						<th:block th:each="compra : ${venta.ventaDetalles}">
+							<tr>
+								<td th:text="${compra.producto.nombre}"></td>
+								<td th:text="${compra.precio}"></td>
+								<td th:text="${compra.cantidad}"></td>
+								<td th:text="${compra.calcularTotal}"></td>
+							</tr>
+						</th:block>
+					</tbody>
+					<tfoot class="text-right table-active font-weight-bold">
+						<tr>
+							<td th:text="'Total: ' + ${venta.calcularTotal}" colspan="4"></td>
+						</tr>
+					</tfoot>
+				</table>
+			</th:block>
+		</div>
+	</main>
+</body>
+</html>

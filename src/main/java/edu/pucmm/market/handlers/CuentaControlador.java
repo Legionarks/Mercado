@@ -25,7 +25,7 @@ public class CuentaControlador extends ServerHandler {
 					if ((Usuario) ctx.sessionAttribute("usuario") != null) {
 						ctx.redirect("/administrar/productos");
 					} else {
-						ctx.render("/html/login.html");
+						ctx.render("/local/html/login.html");
 					}
 				});
 

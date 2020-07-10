@@ -39,7 +39,7 @@ public class ProductoControlador extends ServerHandler {
 
 					modelo.put("pagina", pagina);
 
-					ctx.render("/html/index.html", modelo);
+					ctx.render("/local/html/index.html", modelo);
 				});
 			});
 
@@ -60,7 +60,7 @@ public class ProductoControlador extends ServerHandler {
 							modelo.put("existencia", getMercado().buscarExistencia(id));
 							modelo.put("comentarios", getMercado().buscarComentarios(id));
 
-							ctx.render("/html/producto.html", modelo);
+							ctx.render("/local/html/producto.html", modelo);
 						}
 					});
 

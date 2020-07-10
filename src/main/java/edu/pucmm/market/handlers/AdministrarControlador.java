@@ -40,7 +40,7 @@ public class AdministrarControlador extends ServerHandler {
 					modelo.put("existencias", getMercado().buscarExistencias());
 					modelo.put("carrito_cantidad", (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
-					ctx.render("/html/crud.html", modelo);
+					ctx.render("/local/html/crud.html", modelo);
 				});
 
 				post("/producto/eliminar", ctx -> {
@@ -58,7 +58,7 @@ public class AdministrarControlador extends ServerHandler {
 							new ProductoExistencia(new Producto("", "", new HashSet<Foto>()), new BigDecimal(0)));
 					modelo.put("carrito_cantidad", (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
-					ctx.render("/html/crear-editar.html", modelo);
+					ctx.render("/local/html/crear-editar.html", modelo);
 				});
 
 				get("/producto/editar", ctx -> {
@@ -74,7 +74,7 @@ public class AdministrarControlador extends ServerHandler {
 						modelo.put("existencia", getMercado().buscarExistencia(id));
 						modelo.put("carrito_cantidad", (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
-						ctx.render("/html/crear-editar.html", modelo);
+						ctx.render("/local/html/crear-editar.html", modelo);
 					}
 				});
 
@@ -124,7 +124,7 @@ public class AdministrarControlador extends ServerHandler {
 					modelo.put("ventas", getMercado().buscarVentas());
 					modelo.put("carrito_cantidad", (((Carro) ctx.sessionAttribute("carrito")).cantidadProductos()));
 
-					ctx.render("/html/ventas.html", modelo);
+					ctx.render("/local/html/ventas.html", modelo);
 				});
 			});
 		});
