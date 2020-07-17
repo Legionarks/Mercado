@@ -16,6 +16,7 @@ import io.javalin.Javalin;
 import io.javalin.core.util.RouteOverviewPlugin;
 
 public class Main {
+	private static String conexion = "";
 
 	private static AES256TextEncryptor encriptador;
 	private static final String contraseña = "admin";
@@ -25,12 +26,18 @@ public class Main {
 	private static Javalin app;
 
 	public static void main(String[] args) {
+		if (args.length >= 1) {
+			conexion = args[0];
+		}
 
 		try {
 			encriptador = new AES256TextEncryptor();
 			encriptador.setPassword(contraseña);
 
-			dbServicio = new DBServicio();
+	        if(conexion.isEmpty()) {
+				dbServicio = new DBServicio();
+	        }
+	        
 			mercado = new Mercado(encriptador);
 
 			app = Javalin.create(config -> {
@@ -67,4 +74,8 @@ public class Main {
 
 		return puerto;
 	}
+	
+    public static String getConexion(){
+        return conexion;
+    }
 }

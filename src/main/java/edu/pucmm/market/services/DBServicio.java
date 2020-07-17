@@ -15,7 +15,7 @@ public class DBServicio {
 	private static final String URL = "jdbc:h2:tcp://localhost/~/Mercado";
 
 	public DBServicio() throws SQLException {
-		this.iniciarDB();
+		iniciarDB();
 		probarConexion();
 	}
 

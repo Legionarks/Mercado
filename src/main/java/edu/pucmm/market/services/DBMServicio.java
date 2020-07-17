@@ -3,7 +3,10 @@ package edu.pucmm.market.services;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
 
 import javax.persistence.EntityExistsException;
 import javax.persistence.EntityManager;
@@ -13,6 +16,8 @@ import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
 import javax.persistence.criteria.CriteriaQuery;
 
+import edu.pucmm.market.Main;
+
 public class DBMServicio<T> {
 
 	private static EntityManagerFactory entityManagerFactory;
@@ -20,7 +25,11 @@ public class DBMServicio<T> {
 
 	public DBMServicio(Class<T> clase) {
 		if (entityManagerFactory == null) {
-			entityManagerFactory = Persistence.createEntityManagerFactory("Mercado");
+			if (Main.getConexion().equalsIgnoreCase("Heroku")) {
+				entityManagerFactory = entityManagerFactoryHeroku();
+			} else {
+				entityManagerFactory = Persistence.createEntityManagerFactory("Mercado");
+			}
 		}
 
 		this.claseEntidad = clase;
@@ -28,6 +37,27 @@ public class DBMServicio<T> {
 
 	public EntityManager getEntityManager() {
 		return entityManagerFactory.createEntityManager();
+	}
+
+	private EntityManagerFactory entityManagerFactoryHeroku() {
+		String databaseUrl = System.getenv("DATABASE_URL");
+		StringTokenizer tokenizer = new StringTokenizer(databaseUrl, ":@/");
+
+		// String dbVendor = tokenizer.nextToken();
+		String username = tokenizer.nextToken();
+		String password = tokenizer.nextToken();
+		String host = tokenizer.nextToken();
+		String port = tokenizer.nextToken();
+		String databaseName = tokenizer.nextToken();
+
+		String jdbcUrl = String.format("jdbc:postgresql://%s:%s/%s", host, port, databaseName);
+
+		Map<String, String> properties = new HashMap<>();
+		properties.put("javax.persistence.jdbc.url", jdbcUrl);
+		properties.put("javax.persistence.jdbc.user", username);
+		properties.put("javax.persistence.jdbc.password", password);
+
+		return Persistence.createEntityManagerFactory("PostgreSQL", properties);
 	}
 
 	public Object getId(T entidad) {
